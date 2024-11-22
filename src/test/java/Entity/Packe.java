@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -38,4 +40,7 @@ public class Packe {
             inverseJoinColumns = @JoinColumn(name = "hotel_id")
     )
     private Set<Hotel> hotels;
+    // Relations one to many avec reservation
+    @OneToMany(mappedBy = "reservation",cascade = CascadeType.REMOVE)
+    private List<Reservation> reservations;
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import  Enum.EtatDeReservation;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,4 +29,14 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EtatDeReservation etat; // État de la réservation
+
+    //relation many to one avec packe
+    @ManyToOne
+    @JoinColumn(name="id_packe")
+    private Packe packe;
+
+    //relation one to many avec passager
+    @OneToMany(mappedBy = "passanger" ,cascade = CascadeType.REMOVE)
+    private List<Reservation> reservations;
+
 }

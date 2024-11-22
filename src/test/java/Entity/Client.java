@@ -29,9 +29,12 @@ public class Client {
     String sexe ;
 
     String email ;
+
     String password ;
 
     Integer CIN ;
+    @Column(nullable = false)
+    Long phone;
 
 
 }

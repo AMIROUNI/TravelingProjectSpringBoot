@@ -24,7 +24,7 @@ public class Ville {
 
     String name;
 
-    String imgageVille;
+    String imageVille;
 
     String description;
 
