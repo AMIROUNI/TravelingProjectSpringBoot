@@ -54,11 +54,14 @@ public class Vol {
 
 
 
-    @OneToMany(mappedBy = "aeroportDepart")
-    private List<Vol> volsDepart; // Liste des vols au départ de cet aéroport
+    @ManyToOne
+    @JoinColumn(name = "aeroport_depart_id", nullable = false)
+    private Aeroport aeroportDepart; // Aéroport de départ
 
-    @OneToMany(mappedBy = "aeroportArrivee")
-    private List<Vol> volsArrivee; // Liste des vols à destination de cet aéroport
+    @ManyToOne
+    @JoinColumn(name = "aeroport_arrivee_id", nullable = false)
+    private Aeroport aeroportArrivee; // Aéroport d'arrivée
+
 
 
     @OneToMany(mappedBy = "vol")

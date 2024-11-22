@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.6</version>
+        <version>3.3.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.example</groupId>
-    <artifactId>travlingProjetSB</artifactId>
+    <groupId>com.example</groupId>
+    <artifactId>TpSpringBoot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>travlingProjetSB</name>
-    <description>travlingProjetSB</description>
+    <name>TpSpringBoot</name>
+    <description>TpSpringBoot</description>
     <url/>
     <licenses>
         <license/>
@@ -38,7 +38,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
@@ -53,6 +52,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
     </dependencies>
 
@@ -72,5 +75,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -14,38 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class VolController {
     @Autowired
     VolService volService;
-    @RequestMapping("/addVol")
-    public  String addVol(Model model){
-        Vol vol =new Vol();
-        model.addAttribute("FromVol",vol);
-        return  "new_vol";
-
-    }
-
-    @RequestMapping("/save")
-    public String saveVol(@ModelAttribute("FromVol") Vol vol)
-    {
-        volService.addVol(vol);
-        return "redirect:/allVol";
-
-    }
-
-
-
-    @GetMapping("/delete/{id}")
-    public  String deleteVolById(@PathVariable("id") Long id){
-        volService.deleteVolById(id);
-        return "redirect:/allVol";
-    }
-
-
-    @GetMapping("/edit/{id}")
-    public  String ShowUpdatePage(@PathVariable("id") Long id,Model model ){
-        Vol vol =volService.findVolById(id);
-        model.addAttribute("FromUpdateVol",vol);
-        return  "update_vol";
-    }
-
 
 
 
