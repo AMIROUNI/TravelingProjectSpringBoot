@@ -40,4 +40,7 @@ public class Packe {
             inverseJoinColumns = @JoinColumn(name = "hotel_id")
     )
     private List<Hotel> hotels=new ArrayList<>();
+
+    @OneToMany(mappedBy = "packe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reservation> reservations;
 }

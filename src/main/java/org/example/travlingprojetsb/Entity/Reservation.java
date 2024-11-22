@@ -36,5 +36,8 @@ public class Reservation {
     @JoinColumn(name = "id_client")
     private Client  client;
 
+    @ManyToOne
+    @JoinColumn(name = "id_packe") // Foreign key column
+    private Packe packe;
 
 }

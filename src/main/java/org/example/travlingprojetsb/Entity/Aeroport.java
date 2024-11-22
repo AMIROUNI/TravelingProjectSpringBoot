@@ -1,5 +1,6 @@
 package org.example.travlingprojetsb.Entity;
 
+import org.example.travlingprojetsb.Entity.Ville;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,9 +26,6 @@ public class Aeroport {
     private String codeIATA; // Code IATA (ex : TUN pour Tunis-Carthage)
 
     @Column(nullable = false)
-    private String ville; // Ville où se trouve l'aéroport
-
-    @Column(nullable = false)
     private String pays; // Pays où se trouve l'aéroport
 
     @Column(nullable = true)
@@ -46,6 +44,9 @@ public class Aeroport {
     @OneToMany(mappedBy = "aeroport")
     private List<Escale> escales;
 
+    @ManyToOne
+    @JoinColumn(name = "ville_id") // Creates the foreign key column 'ville_id'
+    private Ville ville;
 
     
 }

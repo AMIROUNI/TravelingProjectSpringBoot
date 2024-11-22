@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table (name = "Ville")
@@ -27,5 +28,8 @@ public class Ville {
     String imagesVille;
     @Column(nullable = false)
     String description;
+
+    @OneToMany(mappedBy = "ville", cascade = CascadeType.ALL)
+    private List<Aeroport> aeroports;
 
 }
