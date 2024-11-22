@@ -1,8 +1,8 @@
-package Controller;
+package org.example.travlingprojetsb.Controller;
 
-import Entity.Reservation;
-import Enum.EtatDeReservation;
-import Service.ReservationService;
+import org.example.travlingprojetsb.Entity.Reservation;
+import org.example.travlingprojetsb.Enum.EtatDeReservation;
+import org.example.travlingprojetsb.Service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

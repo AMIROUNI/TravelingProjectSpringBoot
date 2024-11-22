@@ -1,7 +1,7 @@
-package Service;
+package org.example.travlingprojetsb.Service;
 
-import Entity.Packe;
-import Repository.PackeRepository;
+import org.example.travlingprojetsb.Entity.Packe;
+import org.example.travlingprojetsb.Repository.PackeRepository;
 import org.example.travlingprojetsb.Entity.Packe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +24,7 @@ public class PackeService {
         packeRepository.deleteById(id);
     }
 
-    public Packe findPackeById(Long id) {
-        Optional<Packe> packe = packeRepository.findById(id).get();
-        if (packe.isPresent()) {
-            return packe.get();
-        } else {
-            throw new RuntimeException("Packe not found with ID: " + id);
-        }
-    }
+
 
     public List<Packe> findAllPackes() {
         return packeRepository.findAll();

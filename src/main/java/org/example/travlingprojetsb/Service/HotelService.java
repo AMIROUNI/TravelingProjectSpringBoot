@@ -13,7 +13,7 @@ import java.util.Optional;
 public class HotelService {
 
     @Autowired
-    private Repository.HotelRepository hotelRepository;
+    private HotelRepository hotelRepository;
 
 
     public Hotel addHotel(Hotel hotel) {
@@ -41,11 +41,5 @@ public class HotelService {
     }
 
 
-    public Hotel updateHotel(Hotel hotel) {
-        if (hotelRepository.existsById((long) hotel.getId())) {
-            return hotelRepository.saveAllAndFlush(hotel);
-        } else {
-            throw new RuntimeException("Cannot update Hotel with ID: " + hotel.getId() + ", it does not exist.");
-        }
-    }
+
 }

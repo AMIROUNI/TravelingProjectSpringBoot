@@ -1,7 +1,7 @@
-package Service;
+package org.example.travlingprojetsb.Service;
 
-import Entity.Passager;
-import Repository.PassagerRepository;
+import org.example.travlingprojetsb.Entity.Passager;
+import org.example.travlingprojetsb.Repository.PassagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

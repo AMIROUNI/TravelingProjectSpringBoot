@@ -1,7 +1,7 @@
-package Controller;
+package org.example.travlingprojetsb.Controller;
 
-import Entity.Passager;
-import Service.PassagerService;
+import org.example.travlingprojetsb.Entity.Passager;
+import org.example.travlingprojetsb.Service.PassagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

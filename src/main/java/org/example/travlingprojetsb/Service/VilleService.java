@@ -1,7 +1,7 @@
-package Service;
+package org.example.travlingprojetsb.Service;
 
-import Entity.Ville;
-import Repository.VilleRepository;
+import org.example.travlingprojetsb.Entity.Ville;
+import org.example.travlingprojetsb.Repository.VilleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

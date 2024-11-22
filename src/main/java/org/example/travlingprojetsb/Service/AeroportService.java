@@ -25,10 +25,6 @@ public class AeroportService {
         aeroportRepository.deleteById(id);
     }
 
-    public Aeroport findAeroportById(Long id) {
-       return List<Aeroport> aeroport = aeroportRepository.findById(id).get();
-
-    }
 
 
     public List<Aeroport> findAllAeroports() {

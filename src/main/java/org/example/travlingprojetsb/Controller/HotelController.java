@@ -1,7 +1,7 @@
-package Controller;
+package org.example.travlingprojetsb.Controller;
 
-import Entity.Hotel;
-import Service.HotelService;
+import org.example.travlingprojetsb.Entity.Hotel;
+import org.example.travlingprojetsb.Service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

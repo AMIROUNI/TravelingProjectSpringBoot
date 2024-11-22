@@ -1,8 +1,8 @@
-package Service;
+package org.example.travlingprojetsb.Service;
 
-import Entity.Reservation;
-import Enum.EtatDeReservation;
-import Repository.ReservationRepository;
+import org.example.travlingprojetsb.Entity.Reservation;
+import org.example.travlingprojetsb.Enum.EtatDeReservation;
+import org.example.travlingprojetsb.Repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
