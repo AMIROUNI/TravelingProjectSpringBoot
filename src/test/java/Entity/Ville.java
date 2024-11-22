@@ -4,13 +4,12 @@ package Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import  Enum.EtatDeVol;
 
 import java.sql.Time;
 import java.util.Date;
 
 @Entity
-@Table (name = "Vol")
+@Table (name = "Ville")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,29 +17,15 @@ import java.util.Date;
 @FieldDefaults(level =  AccessLevel.PRIVATE)
 
 
-public class Vol {
+public class Ville {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    String name;
 
-    @Column(nullable = false)
-    String flightNumber;
+    String imgageVille;
 
-    Date dateDepart;
-
-    Date dateArrive;
-
-    Time timeDepart;
-
-    Time timeArrive;
-
-
-
-
-
-    @Column(nullable = false)
-    EtatDeVol etatVol;
-
+    String description;
 
 }
