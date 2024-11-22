@@ -26,13 +26,16 @@ public class Vol {
 
     @Column(nullable = false)
     String flightNumber;
-
+    @Column(nullable = false)
     Date dateDepart;
+    @Column(nullable = false)
 
     Date dateArrive;
+    @Column(nullable = false)
 
     Time timeDepart;
 
+    @Column(nullable = false)
     Time timeArrive;
 
 
