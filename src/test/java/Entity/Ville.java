@@ -21,11 +21,11 @@ public class Ville {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
+    @Column(nullable = false)
     String name;
-
-    String imgageVille;
-
+    @Column(nullable = false)
+    String imagesVille;
+    @Column(nullable = false)
     String description;
 
 }
