@@ -4,6 +4,7 @@ package Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import  Enum.EtatDeVol;
 
 @Entity
 @Table (name = "Vol")
@@ -19,7 +20,15 @@ public class Vol {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+
+    @Column(nullable = false)
     String flightNumber;
+
+
+
+
+    @Column(nullable = false)
+    EtatDeVol etatVol;
 
 
 }
