@@ -29,7 +29,7 @@ public class Ville {
     @Column(nullable = false)
     String description;
 
-    @OneToMany(mappedBy = "ville", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ville", cascade = CascadeType.REMOVE)
     private List<Aeroport> aeroports;
 
 }

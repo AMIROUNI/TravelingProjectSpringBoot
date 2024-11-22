@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AeroportController {
-
+/*
     @Autowired
     private AeroportService aeroportService;
 
@@ -36,17 +36,12 @@ public class AeroportController {
     }
 
 
-    @GetMapping("/editAeroport/{id}")
-    public String showUpdatePage(@PathVariable("id") Long id, Model model) {
-        Aeroport aeroport = aeroportService.findAeroportById(id);
-        model.addAttribute("formUpdateAeroport", aeroport);
-        return "update_aeroport"; // View name for the "update aeroport" form
-    }
+
 
 
     @RequestMapping("/allAeroports")
     public String listAllAeroports(Model model) {
         model.addAttribute("aeroports", aeroportService.findAllAeroports());
         return "list_aeroports"; // View name for displaying all Aeroports
-    }
+    }*/
 }

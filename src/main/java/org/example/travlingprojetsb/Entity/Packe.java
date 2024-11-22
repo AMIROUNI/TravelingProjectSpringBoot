@@ -23,6 +23,13 @@ public class Packe {
     @Column(nullable = false)
     private String nomPacke; // Nom du package
 
+    @Column(nullable = false)
+    private String image;
+
+
+    @Column(nullable = false)
+    private String description; // Nom du package
+
     // Relation Many-to-Many avec Vol
     @ManyToMany
     @JoinTable(
@@ -41,6 +48,6 @@ public class Packe {
     )
     private List<Hotel> hotels=new ArrayList<>();
 
-    @OneToMany(mappedBy = "packe", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "packe", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class VilleController {
 
+    /*
+
     @Autowired
     private VilleService villeService;
 
@@ -50,4 +52,6 @@ public class VilleController {
         villeService.updateVille(id, ville);
         return "redirect:/allVilles";
     }
+
+     */
 }

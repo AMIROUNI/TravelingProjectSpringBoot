@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PassagerController {
+    /*
 
     @Autowired
     private PassagerService passagerService;
@@ -48,4 +49,6 @@ public class PassagerController {
         model.addAttribute("passagers", passagerService.findAllPassagers());
         return "list_passagers"; // View name for displaying all Passagers
     }
+
+     */
 }

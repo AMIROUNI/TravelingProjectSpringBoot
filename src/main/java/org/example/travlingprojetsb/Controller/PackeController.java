@@ -1,7 +1,7 @@
 package org.example.travlingprojetsb.Controller;
 
 import org.example.travlingprojetsb.Entity.Packe;
-import Service.PackeService;
+import org.example.travlingprojetsb.Service.PackeService;
 import org.example.travlingprojetsb.Entity.Packe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,12 +37,7 @@ public class PackeController {
     }
 
 
-    @GetMapping("/editPacke/{id}")
-    public String showUpdatePage(@PathVariable("id") Long id, Model model) {
-        Packe packe = packeService.findPackeById(id);
-        model.addAttribute("formUpdatePacke", packe);
-        return "update_packe"; // View name for the "update Packe" form
-    }
+
 
 
     @RequestMapping("/allPackes")

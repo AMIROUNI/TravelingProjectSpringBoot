@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ClientController {
+    /*
     @Autowired
     ClientService clientService;
     @RequestMapping("/addClient")
@@ -48,5 +49,5 @@ public class ClientController {
 
 
 
-
+*/
 }
