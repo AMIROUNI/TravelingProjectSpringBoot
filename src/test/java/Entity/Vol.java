@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.sql.Time;
+import java.util.Date;
+
 @Entity
 @Table (name = "Vol")
 @Getter
@@ -20,6 +23,15 @@ public class Vol {
     Long id;
 
     String flightNumber;
+
+    Date dateDepart;
+
+    Date dateArrive;
+
+    Time timeDepart;
+
+    Time timeArrive;
+
 
 
 }
