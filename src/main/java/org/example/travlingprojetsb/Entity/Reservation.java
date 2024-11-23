@@ -8,6 +8,7 @@ import org.example.travlingprojetsb.Enum.EtatDeReservation;
 
 
 import java.util.Date;
+import java.util.List;
 
 import static com.fasterxml.jackson.databind.type.LogicalType.Enum;
 
@@ -30,7 +31,10 @@ public class Reservation {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EtatDeReservation etat; // État de la réservation
+    private EtatDeReservation etat= EtatDeReservation.EN_ATTENTE; // État de la réservation
+
+    @Column(nullable = false)
+    private Date timeDeResrvation = new Date();
 
     @ManyToOne
     @JoinColumn(name = "id_client")
@@ -39,5 +43,8 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "id_packe") // Foreign key column
     private Packe packe;
+
+    @OneToMany (mappedBy = "reservation",cascade = CascadeType.REMOVE)
+    List<Passager> passagers;
 
 }

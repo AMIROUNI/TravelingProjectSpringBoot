@@ -13,7 +13,7 @@ public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
-/*
+
     @RequestMapping("/addReservation")
     public String addReservation(Model model) {
         Reservation reservation = new Reservation();
@@ -52,5 +52,5 @@ public class ReservationController {
         return "redirect:/allReservations";
     }
 
- */
+
 }

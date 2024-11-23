@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Booking Form HTML Template</title>
+	<link href="https://fonts.googleapis.com/css?family=Cardo:700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="/css/reservation.css" />
+	<style>
+		#booking {
+			font-family: 'Josefin Sans', sans-serif;
+			background-image: url('/images/background.jpg');
+			background-size: cover;
+			background-position: center;
+		}
+	</style>
+</head>
+
+<body>
+<div id="booking" class="section">
+	<div class="section-center">
+		<div class="container">
+			<div class="row">
+				<div class="booking-form">
+					<div class="form-header">
+						<h1>Make your reservation</h1>
+					</div>
+					<form method="post" action="/reserve">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<span class="form-label">Check In</span>
+									<input class="form-control" type="date" name="checkIn" required>
+								</div>
+								<span class="in-out hidden-xs hidden-sm">&#8652;</span>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<span class="form-label">Check out</span>
+									<input class="form-control" type="date" name="checkOut" required>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="form-group">
+									<span class="form-label">No of rooms</span>
+									<select class="form-control" name="rooms" required>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+									</select>
+									<span class="select-arrow"></span>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<span class="form-label">Adults</span>
+									<select class="form-control" name="adults" required>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+									</select>
+									<span class="select-arrow"></span>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<span class="form-label">Children</span>
+									<select class="form-control" name="children" required>
+										<option value="0">0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+									</select>
+									<span class="select-arrow"></span>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-btn">
+									<button class="submit-btn">Check availability</button>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<span class="form-label">Description</span>
+							<input class="form-control" type="text" name="description" required>
+						</div>
+						<div class="form-group">
+							<span class="form-label">Date of Reservation</span>
+							<input class="form-control" type="date" name="dateDeResrvation" required>
+						</div>
+
+						<div class="form-group">
+							<span class="form-label">Number of Passengers</span>
+							<input class="form-control" type="number" id="numPassengers" name="numPassengers" min="1" required>
+						</div>
+						<div id="passengerFields"></div>
+						<div class="form-btn">
+							<button class="submit-btn" name="submit">Reserve now</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="/js/script.js"></script>
+<script>
+	document.getElementById('numPassengers').addEventListener('input', function() {
+		var numPassengers = this.value;
+		var passengerFields = document.getElementById('passengerFields');
+		passengerFields.innerHTML = '';
+		for (var i = 0; i < numPassengers; i++) {
+			passengerFields.innerHTML += `
+                    <div class="form-group">
+                        <span class="form-label">Passenger ${i + 1} Name</span>
+                        <input class="form-control" type="text" name="passenger${i + 1}Name" required>
+                    </div>
+                    <div class="form-group">
+                        <span class="form-label">Passenger ${i + 1} CIN</span>
+                        <input class="form-control" type="text" name="passenger${i + 1}CIN" required>
+                    </div>
+                    <div class="form-group">
+                        <span class="form-label">Passenger ${i + 1} Phone</span>
+                        <input class="form-control" type="text" name="passenger${i + 1}Phone" required>
+                    </div>
+                `;
+		}
+	});
+</script>
+</body>
+
+</html>
