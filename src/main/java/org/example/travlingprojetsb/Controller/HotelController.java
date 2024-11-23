@@ -13,7 +13,7 @@ public class HotelController {
     @Autowired
     private HotelService hotelService;
 
-/*
+
     @RequestMapping("/addHotel")
     public String addHotel(Model model) {
         Hotel hotel = new Hotel();
@@ -50,5 +50,5 @@ public class HotelController {
         return "list_hotels"; // View name for displaying all Hotels
     }
 
- */
+
 }

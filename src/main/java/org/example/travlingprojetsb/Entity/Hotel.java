@@ -22,6 +22,10 @@ public class Hotel {
 
 
     @Column(nullable = false)
+    private String image;
+
+
+    @Column(nullable = false)
     private String descreptoin;
 
     @Column(nullable = false)
