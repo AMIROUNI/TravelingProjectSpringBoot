@@ -36,7 +36,6 @@ public class Client {
     @Column(nullable = false)
     String password ;
     @Column(nullable = false)
-
     Integer CIN ;
     @Column(nullable = false)
     Integer telphone;

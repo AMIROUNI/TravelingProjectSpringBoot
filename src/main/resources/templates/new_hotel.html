@@ -15,7 +15,7 @@
 <body>
 
 <header>
-    <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+    <div id="menu-bar" class="fas fa-bars" ></div>
     <nav class="navbar">
         <a href="index.php">home</a>
         <a href="adminPage.php">Users</a>
@@ -42,7 +42,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <img src="/images/hotel.jpg" width="400em" alt="Hotel Image" class="img-fluid">
+                <img style="margin:0 50px;" src="/images/hotel.jpg" width="400em" alt="Hotel Image" class="img-fluid">
             </div>
             <div class="col-md-6">
                 <div class="card">
@@ -50,22 +50,22 @@
                         Upload Hotel
                     </div>
                     <div class="card-body">
-                        <form action="/uploadHotel" method="POST" enctype="multipart/form-data">
+                        <form th:action="@{/saveHotel}" th:object="${formHotel}" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="image">Hotel image:</label>
-                                <input type="text" class="form-control" id="image" name="nomHotel" required>
+                                <input type="file" class="form-control" id="image" name="image" required>
                             </div>
                             <div class="form-group">
                                 <label for="nomHotel">Hotel Name:</label>
-                                <input type="text" class="form-control" id="nomHotel" name="nomHotel" required>
+                                <input type="text" th:field="*{nomHotel}" class="form-control" id="nomHotel" name="nomHotel" required>
                             </div>
                             <div class="form-group">
                                 <label for="descreptoin">Description:</label>
-                                <textarea class="form-control" id="descreptoin" name="descreptoin" rows="3" required></textarea>
+                                <textarea class="form-control" th:field="*{descreptoin}" id="descreptoin" name="descreptoin" rows="3" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="nombreEtoiles">Number of Stars:</label>
-                                <input type="number" class="form-control" id="nombreEtoiles" name="nombreEtoiles" min="1" max="5" required>
+                                <input type="number" th:field="*{nombreEtoiles}" class="form-control" id="nombreEtoiles" name="nombreEtoiles" min="1" max="5" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -73,16 +73,49 @@
                 </div>
             </div>
         </div>
+
+        <h1 class="heading">
+            <span>s</span>
+            <span>h</span>
+            <span>o</span>
+            <span>w</span>
+            &nbsp;
+            &nbsp;
+            <span>H</span>
+            <span>O</span>
+            <span>T</span>
+            <span>E</span>
+            <span>L</span>
+        </h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Hotel Image</th>
+                <th scope="col">Hotel Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Number of Stars</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="hotel : ${hotels}">
+                <th scope="row" th:text="${hotel.id}">1</th>
+                <td><img th:src="@{/images/{hotel.image}(hotel.image=${hotel.image})}" alt="Hotel Image" class="img-fluid" style="width: 100px; height: auto;"></td>
+                <td th:text="${hotel.nomHotel}">Hotel Name</td>
+                <td th:text="${hotel.descreptoin}">Description</td>
+                <td th:text="${hotel.nombreEtoiles}">Number of Stars</td>
+                <td>
+                    <a th:href="@{/updateHotel/{id}(id=${hotel.id})}" class="btn btn-warning">Update</a>
+                    <a th:href="@{/deleteHotel/{id}(id=${hotel.id})}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
     </div>
 </section>
-
-<div class="container mt-5">
-    <h1 class="heading">Hotels Table</h1>
-    <?php
-        // Assuming you have a method to display the hotels table
-        hotel::displayHotelsTable($con);
-    ?>
-</div>
 
 <!-- Bootstrap JS (optional) -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>

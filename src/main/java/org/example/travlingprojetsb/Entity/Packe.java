@@ -30,6 +30,10 @@ public class Packe {
     @Column(nullable = false)
     private String description; // Nom du package
 
+
+
+    @Column(nullable = false)
+    private float prix ; // Nom du package
     // Relation Many-to-Many avec Vol
     @ManyToMany
     @JoinTable(

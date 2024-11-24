@@ -5,49 +5,65 @@ import org.example.travlingprojetsb.Service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
+@RequestMapping("/clients")
 public class ClientController {
-    /*
+
     @Autowired
-    ClientService clientService;
-    @RequestMapping("/addClient")
-    public  String addClient(Model model){
-        Client client =new Client();
-       model.addAttribute("FromClient",client);
-       return  "new_client";
+    private ClientService clientService;
 
+    /**
+     * Affiche le formulaire d'ajout et la liste des clients dans la même page.
+     */
+    @GetMapping
+    public String showClientsPage(Model model) {
+        model.addAttribute("formClient", new Client()); // Objet vide pour le formulaire
+        List<Client> clients = clientService.findAllClients(); // Liste des clients
+        model.addAttribute("clients", clients); // Ajout de la liste au modèle
+        return "new_client"; // Nom de la vue HTML
     }
 
-    @RequestMapping("/save")
-    public String saveClient(@ModelAttribute("FromClient") Client client)
-    {
-        clientService.addClient(client);
-        return "redirect:/allClient";
-
+    /**
+     * Enregistre un nouveau client.
+     */
+    @PostMapping("/saveClient")
+    public String saveClient(@ModelAttribute("formClient") Client client) {
+        clientService.addClient(client); // Sauvegarde le client
+        return "redirect:/clients"; // Redirection vers la page principale
     }
 
-
-
-    @GetMapping("/delete/{id}")
-    public  String deleteClientById(@PathVariable("id") Long id){
-        clientService.deleteClientById(id);
-        return "redirect:/allCient";
+    /**
+     * Supprime un client par son ID.
+     */
+    @GetMapping("/deleteClient/{id}")
+    public String deleteClient(@PathVariable("id") Long id) {
+        clientService.deleteClientById(id); // Supprime le client
+        return "redirect:/clients"; // Redirection vers la page principale
     }
 
-
-    @GetMapping("/edit/{id}")
-    public  String ShowUpdatePage(@PathVariable("id") Long id,Model model ){
-        Client client =clientService.findClientById(id);
-        model.addAttribute("FromUpdateCliet",client);
+    /**
+     * Préremplit le formulaire pour modifier un client existant.
+     */
+    @GetMapping("/editClient/{id}")
+    public String showEditClientPage(@PathVariable("id") Long id, Model model) {
+        Client client = clientService.findClientById(id); // Recherche du
+        model.addAttribute("updateClient",client);
         return  "update_client";
     }
 
 
+    @PostMapping("/updateClient/{id}")
+    public String update(@PathVariable("id") Long id,@ModelAttribute("updateClient") Client client) {
+      clientService.updateClinet(client);
+      return  "redirect:/clients";
 
-*/
+
+    }
+
+
+
 }
