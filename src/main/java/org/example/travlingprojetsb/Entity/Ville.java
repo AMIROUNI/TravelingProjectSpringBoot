@@ -24,12 +24,13 @@ public class Ville {
     Long id;
     @Column(nullable = false)
     String name;
-    @Column(nullable = false)
+    @Column(columnDefinition = "MEDIUMBLOB")
     String imagesVille;
     @Column(nullable = false)
     String description;
 
     @OneToMany(mappedBy = "ville", cascade = CascadeType.REMOVE)
-    private List<Aeroport> aeroports;
+    private List<Aeroport> aeroports=null;
+
 
 }

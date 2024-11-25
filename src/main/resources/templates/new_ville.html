@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ville Management</title>
+  <link rel="stylesheet" href="/css/styleGeneral.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<header>
+  <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+  <nav class="navbar">
+    <a href="#home">Home</a>
+    <a href="#book">Book</a>
+    <a href="#packages">Packages</a>
+    <a href="#services">Services</a>
+    <a href="itemPage.php">Items</a>
+    <a href="adminReservation.php">Reservation</a>
+    <a href="logout.php">Logout</a>
+  </nav>
+</header>
+
+<div style="margin: 50px; padding: 50px"></div>
+
+<section class="book" id="book">
+  <h1 class="heading">
+    <span>A</span>
+    <span>D</span>
+    <span>D</span>
+    &nbsp;
+    &nbsp;
+    <span>V</span>
+    <span>I</span>
+    <span>L</span>
+    <span>L</span>
+    <span>E</span>
+  </h1>
+
+  <div class="row">
+    <div class="image">
+      <img style="width: 100vh;" src="/images/ville2.jpg" alt="Add Ville">
+    </div>
+    <form th:action="@{/saveVille}" th:object="${formVille}" method="post" enctype="multipart/form-data">
+      <div class="inputdiv">
+        <h3>Name</h3>
+        <input type="text" th:field="*{name}" placeholder="Enter Ville Name" required>
+      </div>
+      <div class="inputdiv">
+        <h3>Images</h3>
+        <input type="file" th:field="*{imagesVille}" multiple required>
+      </div>
+      <div class="inputdiv">
+        <h3>Description</h3>
+        <textarea th:field="*{description}" placeholder="Enter Description" rows="3" required></textarea>
+      </div>
+      <div class="inputdiv">
+        <input type="submit" class="btn" value="Save Ville">
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="displayVille">
+  <h1 class="heading">
+    <span>D</span>
+    <span>I</span>
+    <span>S</span>
+    <span>P</span>
+    <span>L</span>
+    <span>A</span>
+    <span>Y</span>
+    &nbsp;
+    <span>V</span>
+    <span>I</span>
+    <span>L</span>
+    <span>L</span>
+    <span>E</span>
+  </h1>
+
+
+</section>
+
+<section class="footer">
+  <div class="box-container">
+    <div class="box">
+      <h3>About us</h3>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis temporibus quas quasi facere id, aspernatur rem obcaecati maiores inventore expedita.</p>
+    </div>
+    <div class="box">
+      <h3>Branch</h3>
+      <a href="#">Egypt</a>
+      <a href="#">London</a>
+      <a href="#">Korea</a>
+      <a href="#">Japan</a>
+    </div>
+    <div class="box">
+      <h3>Quick links</h3>
+      <a href="#">Home</a>
+      <a href="#">Book</a>
+      <a href="#">Packages</a>
+      <a href="#">Services</a>
+      <a href="#">Gallery</a>
+      <a href="#">Review</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="box">
+      <h3>Follow us</h3>
+      <a href="#">Facebook</a>
+      <a href="#">Instagram</a>
+      <a href="#">Twitter</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+  <h1 class="created">Created by <span>Eslam Soliman</span> All rights reserved</h1>
+</section>
+
+</body>
+</html>

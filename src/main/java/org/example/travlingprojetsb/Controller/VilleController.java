@@ -6,52 +6,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
+@RequestMapping("/villes")
 public class VilleController {
-
-    /*
 
     @Autowired
     private VilleService villeService;
 
-    @RequestMapping("/addVille")
-    public String addVille(Model model) {
-        Ville ville = new Ville();
-        model.addAttribute("formVille", ville);
-        return "new_ville"; // View name for the "add ville" form
+    @GetMapping
+    public String showVillesPage(Model model) {
+        model.addAttribute("formVille", new Ville());
+        List<Ville> villes = villeService.findAllVilles();
+        model.addAttribute("villes", villes);
+        return "new_ville";
     }
 
-    @RequestMapping("/saveVille")
-    public String saveVille(@ModelAttribute("formVille") Ville ville) {
-        villeService.addVille(ville);
-        return "redirect:/allVilles";
+    @PostMapping("/saveVille")
+    public String saveVille(@RequestParam("file") MultipartFile file,
+                            @RequestParam("name") String name,
+                            @RequestParam("description") String description) {
+        villeService.saveVilleToDB(file, name, description);
+        return "redirect:/villes";
     }
 
     @GetMapping("/deleteVille/{id}")
-    public String deleteVilleById(@PathVariable("id") Long id) {
+    public String deleteVille(@PathVariable("id") Long id) {
         villeService.deleteVilleById(id);
-        return "redirect:/allVilles";
+        return "redirect:/villes";
     }
 
     @GetMapping("/editVille/{id}")
-    public String showUpdatePage(@PathVariable("id") Long id, Model model) {
+    public String showEditVillePage(@PathVariable("id") Long id, Model model) {
         Ville ville = villeService.findVilleById(id);
-        model.addAttribute("formUpdateVille", ville);
-        return "update_ville"; // View name for the "update ville" form
+        model.addAttribute("updateVille", ville);
+        return "update_ville";
     }
 
-    @RequestMapping("/allVilles")
-    public String listAllVilles(Model model) {
-        model.addAttribute("villes", villeService.findAllVilles());
-        return "list_villes"; // View name for displaying all villes
-    }
-
-    @RequestMapping("/updateVille/{id}")
-    public String updateVille(@PathVariable("id") Long id, @ModelAttribute("formUpdateVille") Ville ville) {
+    @PostMapping("/updateVille/{id}")
+    public String updateVille(@PathVariable("id") Long id,
+                              @ModelAttribute("updateVille") Ville ville) {
         villeService.updateVille(id, ville);
-        return "redirect:/allVilles";
+        return "redirect:/villes";
     }
-
-     */
 }

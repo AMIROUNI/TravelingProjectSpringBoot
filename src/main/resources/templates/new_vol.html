@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Flights</title>
+    <link rel="stylesheet" href="/css/styleGeneral.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<header>
+    <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+    <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#add-flight">Add Flight</a>
+        <a href="#display-flights">Display Flights</a>
+        <a href="logout.php">Logout</a>
+    </nav>
+</header>
+
+<div style="margin: 50px; padding: 50px;"></div>
+
+<section id="add-flight" class="book">
+    <h1 class="heading">
+        <span>A</span>
+        <span>d</span>
+        <span>d</span>
+        &nbsp;
+        <span>F</span>
+        <span>l</span>
+        <span>i</span>
+        <span>g</span>
+        <span>h</span>
+        <span>t</span>
+    </h1>
+
+    <div class="row">
+        <div class="image">
+            <img style="width: 100vh ;" src="/images/vols.jpg" alt="Add Flight">
+        </div>
+        <form th:action="@{/vols/saveVol}" th:object="${formVol}" method="POST"   >
+            <div class="inputdiv">
+                <h3>Flight Number</h3>
+                <input type="text" th:field="*{flightNumber}" placeholder="Flight Number" name="flightNumber" required>
+            </div>
+            <div class="inputdiv">
+                <h3>Departure Date</h3>
+                <input type="date" th:field="*{dateDepart}" name="dateDepart" required>
+            </div>
+            <div class="inputdiv">
+                <h3>Arrival Date</h3>
+                <input type="date" th:field="*{dateArrive}" name="dateArrive" required>
+            </div>
+            <div class="inputdiv">
+                <h3>Departure Time</h3>
+                <input type="time" th:field="*{timeDepart}" name="timeDepart" required>
+            </div>
+            <div class="inputdiv">
+                <h3>Arrival Time</h3>
+                <input type="time" th:field="*{timeArrive}" name="timeArrive" required>
+            </div>
+            <div class="inputdiv">
+                <h3>Flight Status</h3>
+                <select th:field="*{etatVol}" name="etatVol" required>
+                    <option value="ON_TIME" selected>On Time</option>
+                    <option value="DELAYED">Delayed</option>
+                    <option value="CANCELLED">Cancelled</option>
+                </select>
+            </div>
+            <div class="inputdiv">
+                <h3>Departure Airport</h3>
+                <input type="text" th:field="*{aeroportDepart}" placeholder="Departure Airport" name="aeroportDepart" required>
+            </div>
+            <div class="inputdiv">
+                <h3>Arrival Airport</h3>
+                <input type="text" th:field="*{aeroportArrivee}" placeholder="Arrival Airport" name="aeroportArrivee" required>
+            </div>
+            <div class="inputdiv">
+                <input type="submit" class="btn" value="Add Flight">
+            </div>
+        </form>
+    </div>
+</section>
+
+<section id="display-flights" class="displayClient">
+    <h1 class="heading">
+        <span>D</span>
+        <span>I</span>
+        <span>S</span>
+        <span>P</span>
+        <span>L</span>
+        <span>A</span>
+        <span>Y</span>
+        &nbsp;
+        <span>F</span>
+        <span>l</span>
+        <span>i</span>
+        <span>g</span>
+        <span>h</span>
+        <span>t</span>
+    </h1>
+    <div class="container">
+        <h2>Flight List</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Flight Number</th>
+                <th>Departure Date</th>
+                <th>Arrival Date</th>
+                <th>Status</th>
+                <th>Delete</th>
+                <th>Update</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vol : ${vols}">
+                <td th:text="${vol.id}"></td>
+                <td th:text="${vol.flightNumber}"></td>
+                <td th:text="${vol.dateDepart}"></td>
+                <td th:text="${vol.dateArrive}"></td>
+                <td th:text="${vol.etatVol}"></td>
+                <td>
+                    <a th:href="@{/vols/deleteVol/{id}(id=${vol.id})}" class="btn btn-danger">Delete</a>
+                </td>
+                <td>
+                    <a th:href="@{/vols/editVol/{id}(id=${vol.id})}" class="btn btn-warning">Update</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>About Us</h3>
+            <p>Manage flights with ease and efficiency.</p>
+        </div>
+    </div>
+    <h1 class="created">Created by <span>Your Name</span> All rights reserved</h1>
+</section>
+
+<script>
+    function showmenu() {
+        const menuBar = document.getElementById('menu-bar');
+        menuBar.classList.toggle('active');
+    }
+</script>
+</body>
+</html>

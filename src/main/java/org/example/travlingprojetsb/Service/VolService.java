@@ -1,28 +1,53 @@
 package org.example.travlingprojetsb.Service;
 
-
 import org.example.travlingprojetsb.Entity.Vol;
 import org.example.travlingprojetsb.Repository.VolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VolService {
+
     @Autowired
-    VolRepository volRepository;
+    private VolRepository volRepository;
 
-
-    public Vol addVol(Vol vol){
-        return  volRepository.save(vol);
+    /**
+     * Adds a new Vol.
+     */
+    public Vol addVol(Vol vol) {
+        return volRepository.save(vol);
     }
 
-    public void  deleteVolById(Long id){
+    /**
+     * Deletes a Vol by its ID.
+     */
+    public void deleteVolById(Long id) {
         volRepository.deleteById(id);
     }
 
-
-    public  Vol findVolById(Long id){
-        return  volRepository.findById(id).get();
+    /**
+     * Finds a Vol by its ID.
+     */
+    public Vol findVolById(Long id) {
+        return volRepository.findById(id).orElse(null);
     }
 
+    /**
+     * Updates an existing Vol.
+     */
+    public Vol updateVol(Vol updatedVol) {
+        if (volRepository.existsById(updatedVol.getId())) {
+            return volRepository.save(updatedVol); // Save the updated Vol
+        }
+        return null; // Or throw an exception if needed
+    }
+
+    /**
+     * Retrieves all Vols.
+     */
+    public List<Vol> findAllVols() {
+        return volRepository.findAll();
+    }
 }

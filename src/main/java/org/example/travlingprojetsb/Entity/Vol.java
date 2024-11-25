@@ -40,11 +40,6 @@ public class Vol {
 
     @Column(nullable = false)
     Time timeArrive;
-
-
-
-
-
     @Column(nullable = false)
     EtatDeVol etatVol;
 

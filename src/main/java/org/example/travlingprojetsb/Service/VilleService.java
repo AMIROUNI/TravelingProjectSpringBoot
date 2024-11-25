@@ -1,10 +1,15 @@
 package org.example.travlingprojetsb.Service;
 
+import ch.qos.logback.core.util.StringUtil;
 import org.example.travlingprojetsb.Entity.Ville;
 import org.example.travlingprojetsb.Repository.VilleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +20,26 @@ public class VilleService {
     private VilleRepository villeRepository;
 
 
+
+
+    public void saveVilleToDB(MultipartFile file, String name, String description) {
+        Ville ville = new Ville();
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        if (fileName.contains("..")) {
+            throw new IllegalArgumentException("Invalid file path: " + fileName);
+        }
+
+        try {
+            ville.setImagesVille(Base64.getEncoder().encodeToString(file.getBytes()));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to process file upload", e);
+        }
+
+        ville.setName(name);
+        ville.setDescription(description);
+        villeRepository.save(ville);
+    }
     public Ville addVille(Ville ville) {
         return villeRepository.save(ville);
     }
