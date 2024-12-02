@@ -11,45 +11,40 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Controller
-@RequestMapping("/villes")
+@RequestMapping("/ville")
 public class VilleController {
 
     @Autowired
     private VilleService villeService;
 
-    @GetMapping
-    public String showVillesPage(Model model) {
+    // Affichage du formulaire d'ajout d'une ville
+    @GetMapping("/add")
+    public String showAddVilleForm(Model model) {
         model.addAttribute("formVille", new Ville());
-        List<Ville> villes = villeService.findAllVilles();
-        model.addAttribute("villes", villes);
         return "new_ville";
     }
 
+    // Enregistrement d'une nouvelle ville
     @PostMapping("/saveVille")
     public String saveVille(@RequestParam("file") MultipartFile file,
                             @RequestParam("name") String name,
                             @RequestParam("description") String description) {
         villeService.saveVilleToDB(file, name, description);
-        return "redirect:/villes";
+        return "redirect:/ville/list";
     }
 
+    // Affichage de la liste des villes
+    @GetMapping("/list")
+    public String showVilleList(Model model) {
+        List<Ville> villes = villeService.findAllVilles();
+        model.addAttribute("villes", villes);
+        return "listVille";
+    }
+
+    // Suppression d'une ville
     @GetMapping("/deleteVille/{id}")
-    public String deleteVille(@PathVariable("id") Long id) {
+    public String deleteVille(@PathVariable Long id) {
         villeService.deleteVilleById(id);
-        return "redirect:/villes";
-    }
-
-    @GetMapping("/editVille/{id}")
-    public String showEditVillePage(@PathVariable("id") Long id, Model model) {
-        Ville ville = villeService.findVilleById(id);
-        model.addAttribute("updateVille", ville);
-        return "update_ville";
-    }
-
-    @PostMapping("/updateVille/{id}")
-    public String updateVille(@PathVariable("id") Long id,
-                              @ModelAttribute("updateVille") Ville ville) {
-        villeService.updateVille(id, ville);
-        return "redirect:/villes";
+        return "redirect:/ville/list";
     }
 }

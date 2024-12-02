@@ -29,19 +29,14 @@ public class HotelController {
         return "new_hotel"; // View name for the "add hotel" form
     }
 
-    @RequestMapping("/saveHotel")
-    public String saveHotel(@ModelAttribute("formHotel") Hotel hotel, @RequestParam("image") MultipartFile image) {
-        if (!image.isEmpty()) {
-            try {
-                byte[] bytes = image.getBytes();
-                Path path = Paths.get(UPLOADED_FOLDER + image.getOriginalFilename());
-                Files.write(path, bytes);
-                hotel.setImage(image.getOriginalFilename());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        hotelService.addHotel(hotel);
+    @PostMapping("/saveHotel")
+    public String saveHotel(@RequestParam("image") MultipartFile file,
+                            @RequestParam("nomHotel") String nomHotel,
+                            @RequestParam("description") String description,
+                            @RequestParam("nombreEtoiles") int nombreEtoiles,
+                            @RequestParam("latitude") double latitude,
+                            @RequestParam("longitude") double longitude) {
+        hotelService.saveHotelToDB(file, nomHotel, description, nombreEtoiles, latitude, longitude);
         return "redirect:/allHotels";
     }
 

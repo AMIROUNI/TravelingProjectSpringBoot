@@ -4,120 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Hotel</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="/css/styleGeneral.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <style>
+        #map, #map2 {
+            height: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .container {
+            padding-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
 <header>
-    <div id="menu-bar" class="fas fa-bars" ></div>
+    <div id="menu-bar" class="fas fa-bars"></div>
     <nav class="navbar">
-        <a href="index.php">home</a>
+        <a href="index.php">Home</a>
         <a href="adminPage.php">Users</a>
-        <a href="adminReservation.php">reservation</a>
-        <a href="logout.php">logout</a>
+        <a href="adminReservation.php">Reservation</a>
+        <a href="logout.php">Logout</a>
     </nav>
 </header>
 
-<div style="margin: 50px;padding: 50px"></div>
-
 <section class="book" id="book">
-    <h1 class="heading">
-        <span>A</span>
-        <span>d</span>
-        <span>d</span>
-        &nbsp;
-        &nbsp;
-        <span>H</span>
-        <span>O</span>
-        <span>T</span>
-        <span>E</span>
-        <span>L</span>
-    </h1>
+    <h1 class="heading">Add Hotel</h1>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <img style="margin:0 50px;" src="/images/hotel.jpg" width="400em" alt="Hotel Image" class="img-fluid">
+                <img src="/images/hotel.jpg" width="100%" alt="Hotel Image" class="img-fluid">
             </div>
             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        Upload Hotel
+                <form action="/saveHotel" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="image">Hotel Image:</label>
+                        <input type="file" class="form-control" id="image" name="image" required>
                     </div>
-                    <div class="card-body">
-                        <form th:action="@{/saveHotel}" th:object="${formHotel}" method="POST" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="image">Hotel image:</label>
-                                <input type="file" class="form-control" id="image" name="image" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="nomHotel">Hotel Name:</label>
-                                <input type="text" th:field="*{nomHotel}" class="form-control" id="nomHotel" name="nomHotel" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="descreptoin">Description:</label>
-                                <textarea class="form-control" th:field="*{descreptoin}" id="descreptoin" name="descreptoin" rows="3" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="nombreEtoiles">Number of Stars:</label>
-                                <input type="number" th:field="*{nombreEtoiles}" class="form-control" id="nombreEtoiles" name="nombreEtoiles" min="1" max="5" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                    <div class="form-group">
+                        <label for="nomHotel">Hotel Name:</label>
+                        <input type="text" class="form-control" id="nomHotel" name="nomHotel" required>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombreEtoiles">Number of Stars:</label>
+                        <input type="number" class="form-control" id="nombreEtoiles" name="nombreEtoiles" min="1" max="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="latitude">Latitude:</label>
+                        <input type="number"   id="latitude" class="form-control" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="longitude">Longitude:</label>
+                        <input type="number" id="longitude" class="form-control" readonly required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
         </div>
-
-        <h1 class="heading">
-            <span>s</span>
-            <span>h</span>
-            <span>o</span>
-            <span>w</span>
-            &nbsp;
-            &nbsp;
-            <span>H</span>
-            <span>O</span>
-            <span>T</span>
-            <span>E</span>
-            <span>L</span>
-        </h1>
-
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Hotel Image</th>
-                <th scope="col">Hotel Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Number of Stars</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="hotel : ${hotels}">
-                <th scope="row" th:text="${hotel.id}">1</th>
-                <td><img th:src="@{/images/{hotel.image}(hotel.image=${hotel.image})}" alt="Hotel Image" class="img-fluid" style="width: 100px; height: auto;"></td>
-                <td th:text="${hotel.nomHotel}">Hotel Name</td>
-                <td th:text="${hotel.descreptoin}">Description</td>
-                <td th:text="${hotel.nombreEtoiles}">Number of Stars</td>
-                <td>
-                    <a th:href="@{/updateHotel/{id}(id=${hotel.id})}" class="btn btn-warning">Update</a>
-                    <a th:href="@{/deleteHotel/{id}(id=${hotel.id})}" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
+        <div style="margin: 50px;padding: 50px"></div>
+        <div id="map"></div>
     </div>
 </section>
 
-<!-- Bootstrap JS (optional) -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div id="map2"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    var map1 = L.map('map').setView([33.8869, 9.5375], 7);
+    var map2 = L.map('map2').setView([33.8869, 9.5375], 7);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map1);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map2);
+
+    var marker1 = null;
+
+    map1.on('click', function(e) {
+        var lat = e.latlng.lat, lng = e.latlng.lng;
+        if (marker1) { map1.removeLayer(marker1); }
+        marker1 = L.marker([lat, lng]).addTo(map1);
+        document.getElementById('latitude').value =  lat;
+        document.getElementById('longitude').value = lng;
+    });
+
+    function showOnMap(button) {
+        var lat = button.getAttribute('data-lat');
+        var lng = button.getAttribute('data-lng');
+        if (lat && lng) {
+            L.marker([lat, lng]).addTo(map2).bindPopup('Location').openPopup();
+            map2.setView([lat, lng], 15);
+        }
+    }
+</script>
 </body>
 </html>

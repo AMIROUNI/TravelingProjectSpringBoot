@@ -26,11 +26,26 @@ public class Hotel {
 
 
     @Column(nullable = false)
-    private String descreptoin;
+    private String description;
 
     @Column(nullable = false)
     private int nombreEtoiles; // Nombre d'étoiles de l'hôtel
 
+
+
+    @Column(nullable = false)
+    private double latitude;
+
+
+
+    @Column(nullable = false)
+    private  double longitude;
+
+
+
     @ManyToMany(mappedBy = "hotels")
     private List<Packe> packs;
+
+
+
 }
