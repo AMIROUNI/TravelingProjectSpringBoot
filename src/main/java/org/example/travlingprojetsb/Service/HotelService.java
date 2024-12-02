@@ -72,6 +72,8 @@ public class HotelService {
     }
 
 
-
+   public   Hotel updateHotel(Hotel hotel){
+        return  hotelRepository.saveAndFlush(hotel);
+     }
 
 }

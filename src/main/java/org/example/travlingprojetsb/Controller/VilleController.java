@@ -21,6 +21,8 @@ public class VilleController {
     @GetMapping("/add")
     public String showAddVilleForm(Model model) {
         model.addAttribute("formVille", new Ville());
+        List<Ville> villes = villeService.findAllVilles();
+        model.addAttribute("villes", villes);
         return "new_ville";
     }
 
@@ -38,7 +40,7 @@ public class VilleController {
     public String showVilleList(Model model) {
         List<Ville> villes = villeService.findAllVilles();
         model.addAttribute("villes", villes);
-        return "listVille";
+        return "new_ville";
     }
 
     // Suppression d'une ville

@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Setter
 @Table(name = "Hotel")
 public class Hotel {
 
@@ -21,7 +23,7 @@ public class Hotel {
     private String nomHotel;
 
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
 
 
