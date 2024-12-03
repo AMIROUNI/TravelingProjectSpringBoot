@@ -121,6 +121,7 @@
                 <th>Latitude</th>
                 <th>Longitude</th>
                 <th>Actions</th>
+                <th>show Location</th>
             </tr>
             </thead>
             <tbody>
@@ -138,6 +139,12 @@
                     <a th:href="@{/hotel/updateHotel/{id}(id=${hotel.id})}" class="btn btn-primary" onclick="return confirm('Are you sure you want to update this hotel?');">
                         Update</a>
                 </td>
+
+                <td><button
+                        class="btn btn-primary btn-sm mb-1"
+                        th:attr="data-lat=${hotel.latitude}, data-lng=${hotel.longitude}"
+                        onclick="showOnMap(this)">
+                Location </button></td>
             </tr>
             </tbody>
         </table>
