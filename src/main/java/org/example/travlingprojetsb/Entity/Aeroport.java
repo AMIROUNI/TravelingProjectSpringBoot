@@ -1,10 +1,8 @@
 package org.example.travlingprojetsb.Entity;
 
+import lombok.*;
 import org.example.travlingprojetsb.Entity.Ville;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -13,6 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "Aeroport")
+@Getter
+@Setter
 public class Aeroport {
 
     @Id
@@ -22,7 +22,7 @@ public class Aeroport {
     @Column(nullable = false)
     private String nom; // Nom de l'aéroport
 
-    @Column(nullable = false, unique = true, length = 3)
+    @Column(nullable = false, length = 10)
     private String codeIATA; // Code IATA (ex : TUN pour Tunis-Carthage)
 
     @Column(nullable = false)
@@ -31,6 +31,16 @@ public class Aeroport {
     @Column(nullable = true)
     private String description; // Description ou remarques sur l'aéroport
 
+
+
+
+    @Column(nullable = false)
+    private double latitude;
+
+
+
+    @Column(nullable = false)
+    private  double longitude;
 
 
 

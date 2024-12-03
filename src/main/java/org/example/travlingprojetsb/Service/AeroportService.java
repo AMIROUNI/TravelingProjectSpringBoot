@@ -26,7 +26,6 @@ public class AeroportService {
     }
 
 
-
     public List<Aeroport> findAllAeroports() {
         return aeroportRepository.findAll();
     }
@@ -38,4 +37,6 @@ public class AeroportService {
             throw new RuntimeException("Cannot update Aeroport with ID: " + aeroport.getId() + ", it does not exist.");
         }
     }
+    public Aeroport findAeroportById (Long id){ return  aeroportRepository.findById(id).get();}
 }
+
