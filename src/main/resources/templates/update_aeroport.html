@@ -9,14 +9,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <style>
-    #map{
+    #map {
       height: 400px;
       width: 100%;
-      margin-bottom: 20px;
+      margin-top: 20px;
     }
     .container {
       padding-top: 20px;
@@ -58,28 +59,33 @@
 
   <div class="row">
     <div class="image">
-      <img style="width: 100vh;" src="/images/airport.jpg" alt="Update Aeroport">
+      <img style="width: 100%;" src="/images/airport.jpg" alt="Update Aeroport">
     </div>
     <form th:action="@{/aeroport/updateAeroport/{id}(id=${aeroport.id})}" th:object="${aeroport}" method="post">
       <div class="form-group">
-        <label for="codeIATA">IATA Code:</label>
-        <input type="text" id="codeIATA" name="codeIATA" class="form-control" placeholder="IATA Code" th:value="${aeroport.codeIATA}" required>
-      </div>
-      <div class="form-group">
-        <label for="nom">Name:</label>
+        <label for="nom">Aeroport Name:</label>
         <input type="text" id="nom" name="nom" class="form-control" placeholder="Aeroport Name" th:value="${aeroport.nom}" required>
       </div>
       <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" class="form-control" placeholder="Description" rows="3" th:value="${aeroport.description}" required></textarea>
+        <label for="codeIATA">IATA Code:</label>
+        <input type="text" id="codeIATA" name="codeIATA" class="form-control" placeholder="IATA Code" th:value="${aeroport.codeIATA}" maxlength="10" required>
       </div>
       <div class="form-group">
         <label for="pays">Country:</label>
         <input type="text" id="pays" name="pays" class="form-control" placeholder="Country" th:value="${aeroport.pays}" required>
       </div>
+
       <div class="form-group">
         <label for="ville">City:</label>
-        <input type="text" id="ville" name="ville" class="form-control" placeholder="City" th:value="${aeroport.ville}" required>
+        <select name="ville" id="ville" class="form-control" required>
+          <option value="" disabled selected>Select a city</option>
+          <option th:each="v : ${villes}" th:value="${v.id}" th:text="${v.name}"></option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" class="form-control" placeholder="Description" rows="3" th:text="${aeroport.description}" required></textarea>
       </div>
       <div class="form-group">
         <label for="latitude">Latitude:</label>
@@ -93,31 +99,36 @@
     </form>
   </div>
 
-  <div style="margin: 10px;" id="map"></div>
-  <script>
-    // Initialize the map with the current airport's coordinates (latitude and longitude from the backend)
-    var map = L.map('map').setView([${aeroport.latitude}, ${aeroport.longitude}], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
-
-    var marker = L.marker([${aeroport.latitude}, ${aeroport.longitude}]).addTo(map);
-    marker.bindPopup('<b>${aeroport.nom}</b><br>${aeroport.pays}').openPopup();
-
-    map.on('click', function(e) {
-      var lat = e.latlng.lat;
-      var lng = e.latlng.lng;
-
-      // Set the marker on the map
-      if (marker) {
-        map.removeLayer(marker);
-      }
-      marker = L.marker([lat, lng]).addTo(map);
-
-      // Update the form fields with the selected latitude and longitude
-      document.getElementById('latitude').value = lat;
-      document.getElementById('longitude').value = lng;
-    });
-  </script>
+  <div id="map"></div>
 </section>
+
+<script>
+  // Initialize map
+  var map = L.map('map').setView([33.8869, 9.5375], 7);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19
+  }).addTo(map);
+
+  // Add marker if coordinates are already set
+  var lat = document.getElementById('latitude').value;
+  var lng = document.getElementById('longitude').value;
+  if (lat && lng) {
+    L.marker([lat, lng]).addTo(map);
+    map.setView([lat, lng], 15);
+  }
+
+  // Update marker on map click
+  var marker = null;
+  map.on('click', function(e) {
+    var lat = e.latlng.lat, lng = e.latlng.lng;
+    if (marker) {
+      map.removeLayer(marker);
+    }
+    marker = L.marker([lat, lng]).addTo(map);
+    document.getElementById('latitude').value = lat;
+    document.getElementById('longitude').value = lng;
+  });
+</script>
 
 </body>
 </html>

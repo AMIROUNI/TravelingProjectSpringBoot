@@ -77,10 +77,18 @@
 
             <div class="form-group">
                 <label for="ville">City:</label>
-                <select id="ville" name="ville" class="form-control" th:field="*{villes}" required>
-                    <option th:each="v : ${villes}" th:value="${v.id}" th:text="${v.name}">City</option>
+                <select name="ville" id="ville" class="form-control" required>
+                    <option value="" disabled selected>Select a city</option>
+                    <option th:each="v : ${villes}" th:value="${v.id}" th:text="${v.name}"></option>
                 </select>
             </div>
+
+            <!--            <div class="form-group">-->
+<!--                <label for="description">Description:</label>-->
+<!--                <input type="number" id="" name="ville" class="form-control" placeholder="nhghjt" rows="3" required></input>-->
+<!--            </div>-->
+
+
 
             <div class="form-group">
                 <label for="description">Description:</label>
@@ -130,10 +138,12 @@
                 <th>IATA Code</th>
                 <th>Country</th>
                 <th>Description</th>
+                <th>City</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
                 <th>Actions</th>
                 <th>Show Location</th>
+
             </tr>
             </thead>
             <tbody>
@@ -142,6 +152,7 @@
                 <td th:text="${aeroport.codeIATA}"></td>
                 <td th:text="${aeroport.pays}"></td>
                 <td th:text="${aeroport.description}"></td>
+                <td th:text="${aeroport.ville != null ? aeroport.ville.name : 'No city'}"></td>
                 <td th:text="${aeroport.latitude}"></td>
                 <td th:text="${aeroport.longitude}"></td>
                 <td>
@@ -150,6 +161,7 @@
                     <a th:href="@{/aeroport/updateAeroport/{id}(id=${aeroport.id})}" class="btn btn-primary">
                         Update</a>
                 </td>
+
                 <td><button class="btn btn-primary btn-sm" th:attr="data-lat=${aeroport.latitude}, data-lng=${aeroport.longitude}" onclick="showOnMap(this)">Location</button></td>
             </tr>
             </tbody>
