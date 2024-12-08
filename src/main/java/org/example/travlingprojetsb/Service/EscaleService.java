@@ -20,4 +20,9 @@ public class EscaleService {
     public List<Escale> findEscalesByVolId(Long id) {
         return escaleRepository.findByVolId(id);
     }
+
+
+    public  void  deleteEscale(Long id){
+        escaleRepository.deleteById(id);
+    }
 }

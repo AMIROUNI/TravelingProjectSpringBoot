@@ -1,48 +1,84 @@
 package org.example.travlingprojetsb.Controller;
 
 import org.example.travlingprojetsb.Entity.Packe;
+import org.example.travlingprojetsb.Service.HotelService;
 import org.example.travlingprojetsb.Service.PackeService;
-import org.example.travlingprojetsb.Entity.Packe;
+import org.example.travlingprojetsb.Service.VolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
+@RequestMapping("/packe")
 public class PackeController {
 
     @Autowired
     private PackeService packeService;
+    @Autowired
+    private VolService volService;
+    @Autowired
+    private HotelService hotelService;
 
-
-    @RequestMapping("/addPacke")
-    public String addPacke(Model model) {
-        Packe packe = new Packe();
-        model.addAttribute("formPacke", packe);
-        return "new_packe"; // View name for the "add Packe" form
+    // Show form to add a new Packe
+    @GetMapping("/add")
+    public String showAddPackeForm(Model model) {
+        model.addAttribute("formPacke", new Packe());
+        model.addAttribute("vols", volService.findAllVols());
+        model.addAttribute("hotels", hotelService.findAllHotels());
+        return "new_packe";
     }
 
-
-    @RequestMapping("/savePacke")
-    public String savePacke(@ModelAttribute("formPacke") Packe packe) {
-        packeService.addPacke(packe);
-        return "redirect:/allPackes";
+    // Save Packe with image
+    @PostMapping("/save")
+    public String savePacke(@RequestParam("image") MultipartFile file,
+                            @RequestParam("nomPacke") String nomPacke,
+                            @RequestParam("description") String description,
+                            @RequestParam("prix") float prix,
+                            @RequestParam("vols") List<Long> volsIds,
+                            @RequestParam("hotels") List<Long> hotelsIds) {
+        packeService.savePackeToDB(file, nomPacke, description, prix, volsIds, hotelsIds);
+        return "redirect:/packe/list";
     }
 
-
-    @GetMapping("/deletePacke/{id}")
-    public String deletePackeById(@PathVariable("id") Long id) {
-        packeService.deletePackeById(id);
-        return "redirect:/allPackes";
-    }
-
-
-
-
-
-    @RequestMapping("/allPackes")
+    // List all Packes
+    @GetMapping("/list")
     public String listAllPackes(Model model) {
         model.addAttribute("packes", packeService.findAllPackes());
-        return "list_packes"; // View name for displaying all Packes
+        return "new_packe"; // Ensure this view exists
+    }
+
+    // Delete a Packe
+    @GetMapping("/delete/{id}")
+    public String deletePacke(@PathVariable("id") Long id) {
+        packeService.deletePackeById(id);
+        return "redirect:/packe/list";
+    }
+
+
+    // Show form to update a Packe
+    @GetMapping("/update/{id}")
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+        Packe packe = packeService.findPackeById(id);
+        model.addAttribute("formPacke", packe);
+        model.addAttribute("vols", volService.findAllVols());
+        model.addAttribute("hotels", hotelService.findAllHotels());
+        return "update_packe";
+    }
+
+    // Update Packe
+    @PostMapping("/update/{id}")
+    public String updatePacke(@PathVariable("id") Long id,
+                              @RequestParam("image") MultipartFile file,
+                              @RequestParam("nomPacke") String nomPacke,
+                              @RequestParam("description") String description,
+                              @RequestParam("prix") float prix,
+                              @RequestParam("vols") List<Long> volsIds,
+                              @RequestParam("hotels") List<Long> hotelsIds) {
+        packeService.updatePacke(id, file, nomPacke, description, prix, volsIds, hotelsIds);
+        return "redirect:/packe/list";
     }
 }

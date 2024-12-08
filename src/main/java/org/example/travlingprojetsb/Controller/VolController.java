@@ -8,7 +8,9 @@ import org.example.travlingprojetsb.Service.EscaleService;
 import org.example.travlingprojetsb.Service.VolService;
 import org.example.travlingprojetsb.Service.AeroportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -165,6 +167,21 @@ public class VolController {
              List<Escale> escaleList=escaleService.findEscalesByVolId(volId);
 
         return escaleList;
+    }
+
+
+    @DeleteMapping("/escales/delete/{id}")
+    @ResponseBody
+    public ResponseEntity<String> deleteEscale(@PathVariable("id") Long id) {
+        System.out.println("ID reçu pour suppression : " + id);
+        try {
+            escaleService.deleteEscale(id);
+            return ResponseEntity.ok("Escale supprimée avec succès");
+        } catch (Exception e) {
+            System.err.println("Erreur : " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors de la suppression de l'escale : " + e.getMessage());
+        }
     }
 
 }
