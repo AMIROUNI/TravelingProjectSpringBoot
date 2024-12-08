@@ -1,11 +1,13 @@
 package org.example.travlingprojetsb.Service;
 
+
 import org.example.travlingprojetsb.Entity.Vol;
 import org.example.travlingprojetsb.Repository.VolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VolService {
@@ -13,41 +15,33 @@ public class VolService {
     @Autowired
     private VolRepository volRepository;
 
-    /**
-     * Adds a new Vol.
-     */
-    public Vol addVol(Vol vol) {
-        return volRepository.save(vol);
-    }
-
-    /**
-     * Deletes a Vol by its ID.
-     */
-    public void deleteVolById(Long id) {
-        volRepository.deleteById(id);
-    }
-
-    /**
-     * Finds a Vol by its ID.
-     */
-    public Vol findVolById(Long id) {
-        return volRepository.findById(id).orElse(null);
-    }
-
-    /**
-     * Updates an existing Vol.
-     */
-    public Vol updateVol(Vol updatedVol) {
-        if (volRepository.existsById(updatedVol.getId())) {
-            return volRepository.save(updatedVol); // Save the updated Vol
-        }
-        return null; // Or throw an exception if needed
-    }
-
-    /**
-     * Retrieves all Vols.
-     */
+    // 1. Récupérer tous les vols
     public List<Vol> findAllVols() {
         return volRepository.findAll();
+    }
+
+    // 2. Ajouter un nouveau vol
+    public void saveVol(Vol vol) {
+        volRepository.save(vol);
+    }
+
+    // 3. Trouver un vol par son ID
+    public Vol findVolById(Long id) {
+        Optional<Vol> optionalVol = volRepository.findById(id);
+        return optionalVol.orElse(null);
+    }
+
+    // 4. Mettre à jour un vol existant
+    public void updateVol(Vol updatedVol) {
+        if (volRepository.existsById(updatedVol.getId())) {
+            volRepository.save(updatedVol);
+        }
+    }
+
+    // 5. Supprimer un vol par son ID
+    public void deleteVol(Long id) {
+        if (volRepository.existsById(id)) {
+            volRepository.deleteById(id);
+        }
     }
 }
