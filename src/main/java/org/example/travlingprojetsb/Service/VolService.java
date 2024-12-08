@@ -43,5 +43,12 @@ public class VolService {
         if (volRepository.existsById(id)) {
             volRepository.deleteById(id);
         }
+
+
+
+    }
+    // Fetch a list of Vols based on the list of volIds
+    public List<Vol> findVolsByIds(List<Long> volIds) {
+        return volRepository.findAllById(volIds);
     }
 }

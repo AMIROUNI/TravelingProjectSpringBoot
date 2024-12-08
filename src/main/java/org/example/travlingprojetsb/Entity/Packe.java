@@ -23,7 +23,7 @@ public class Packe {
     @Column(nullable = false)
     private String nomPacke; // Nom du package
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
 
 
