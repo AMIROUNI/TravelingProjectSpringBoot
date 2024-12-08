@@ -352,9 +352,22 @@
     }
 
     function deleteEscale(escaleId) {
-        // Implement the delete functionality
-        console.log('Delete escale:', escaleId);
+        fetch(`http://localhost:8088/vols/escales/delete/${escaleId}`, { // URL complète ici
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Escale supprimée avec succès');
+                    // Actualiser la liste des escales
+                    const volId = document.getElementById('volId').value;
+                    showEscales(volId);
+                } else {
+                    console.error('Erreur lors de la suppression de l\'escale');
+                }
+            })
+            .catch(erreur => console.error('Erreur lors de la suppression de l\'escale :', erreur));
     }
+
 </script>
 
 
