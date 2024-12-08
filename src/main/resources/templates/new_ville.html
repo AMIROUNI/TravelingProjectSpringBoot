@@ -107,6 +107,7 @@
         <td>
           <a th:href="@{/ville/deleteVille/{id}(id=${ville.id})}" class="btn btn-danger"
              onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette ville ?');">Supprimer</a>
+          <a th:href="@{/ville/updateVille/{id}(id=${ville.id})}" class="btn btn-primary">Update</a>
         </td>
       </tr>
       </tbody>

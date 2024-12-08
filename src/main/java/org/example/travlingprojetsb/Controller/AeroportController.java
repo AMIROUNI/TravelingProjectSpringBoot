@@ -57,10 +57,10 @@ public class AeroportController {
 //        return "redirect:/aeroport/allAeroports"; // Redirect to the list of all airports after saving
 //    }
 
-    @GetMapping("/aeroport/deleteAeroport/{id}")
+    @GetMapping("/deleteAeroport/{id}")
     public String deleteAeroportById(@PathVariable("id") Long id) {
         aeroportService.deleteAeroportById(id);
-        return "redirect:/allAeroports";
+        return "redirect:/aeroport/allAeroports";
     }
 
     @GetMapping("/updateAeroport/{id}")
@@ -87,8 +87,8 @@ public class AeroportController {
         model.addAttribute("aeroports", aeroportService.findAllAeroports());
 
 
-        List<Ville> villes = villeService.findAllVilles();
-        model.addAttribute("villes", villes);
+        //List<Ville> villes = villeService.findAllVilles();
+        //model.addAttribute("villes", villes);
         return "new_aeroport"; // View name for displaying all Aeroports
 
 

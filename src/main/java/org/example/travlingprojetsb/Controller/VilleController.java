@@ -49,4 +49,19 @@ public class VilleController {
         villeService.deleteVilleById(id);
         return "redirect:/ville/list";
     }
+    // Show update form for a Ville
+    @GetMapping("/updateVille/{id}")
+    public String showUpdateVilleForm(@PathVariable("id") Long id, Model model) {
+        Ville ville = villeService.findVilleById(id);
+        model.addAttribute("ville", ville);
+        return "update_ville"; // View name for update form
+    }
+
+    // Handle update request for a Ville
+    @PostMapping("/updateVille/{id}")
+    public String updateVille(@PathVariable("id") Long id, @ModelAttribute Ville ville) {
+        villeService.updateVille(id, ville);
+        return "redirect:/ville/list"; // Redirect to the Ville list
+    }
 }
+
