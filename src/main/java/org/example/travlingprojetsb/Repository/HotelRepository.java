@@ -8,7 +8,11 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface HotelRepository extends JpaRepository<Hotel,Long> {
+
     @Query("SELECT h FROM Hotel h WHERE h.id IN :hotelIds")
     List<Hotel> findHotelByIds(@Param("hotelIds") List<Long> hotelIds);
+
 }

@@ -40,9 +40,11 @@ public class PackeController {
                             @RequestParam("prix") float prix,
                             @RequestParam("vols") List<Long> volsIds,
                             @RequestParam("hotels") List<Long> hotelsIds) {
+
         packeService.savePackeToDB(file, nomPacke, description, prix, volsIds, hotelsIds);
         return "redirect:/packe/list";
     }
+
 
     // List all Packes
     @GetMapping("/list")
@@ -55,7 +57,18 @@ public class PackeController {
     @GetMapping("/delete/{id}")
     public String deletePacke(@PathVariable("id") Long id) {
         packeService.deletePackeById(id);
+
+
         return "redirect:/packe/list";
+    }
+
+    // List all Packes
+    @GetMapping("/list")
+    public String listAllPackes(Model model) {
+        model.addAttribute("packes", packeService.findAllPackes());
+        model.addAttribute("vols", volService.findAllVols());
+        model.addAttribute("hotels", hotelService.findAllHotels());
+        return "new_packe"; // Ensure this view exists
     }
 
 
@@ -68,6 +81,7 @@ public class PackeController {
         model.addAttribute("hotels", hotelService.findAllHotels());
         return "update_packe";
     }
+
 
     // Update Packe
     @PostMapping("/update/{id}")

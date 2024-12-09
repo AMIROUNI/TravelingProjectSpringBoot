@@ -51,6 +51,7 @@ public class PackeService {
         packe.setPrix(prix);
 
         List<Vol> vols = volRepository.findVolsByIds(volsIds);
+
         List<Hotel> hotels = hotelRepository.findHotelByIds(hotelsIds);
         packe.setVols(vols);
         packe.setHotels(hotels);
