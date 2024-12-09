@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Packe</title>
+    <link rel="stylesheet" href="/css/styleGeneral.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .container {
+            padding-top: 20px;
+        }
+        .row {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+    <nav class="navbar">
+        <a href="#add">Add Packe</a>
+        <a href="#list">List Packes</a>
+        <a href="logout.php">Logout</a>
+    </nav>
+</header>
+
+<div style="margin: 50px; padding: 50px"></div>
+<section class="book" id="update">
+    <h1 class="heading">
+        <span>U</span>
+        <span>P</span>
+        <span>D</span>
+        <span>A</span>
+        <span>T</span>
+        <span>E</span>
+        &nbsp;
+        <span>P</span>
+        <span>A</span>
+        <span>C</span>
+        <span>K</span>
+        <span>E</span>
+    </h1>
+
+    <div class="row">
+        <div class="image">
+            <img style="width: 100%;" src="/images/packe.png" alt="Update Packe">
+        </div>
+
+        <form th:action="@{/packe/update/{id}(id=${formPacke.id})}" th:object="${formPacke}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nomPacke">Packe Name:</label>
+                <input type="text" id="nomPacke" name="nomPacke" class="form-control" th:value="${formPacke.nomPacke}" required>
+            </div>
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" class="form-control" th:text="${formPacke.description}" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="prix">Price:</label>
+                <input type="number" step="0.01" id="prix" name="prix" class="form-control" th:value="${formPacke.prix}" required>
+            </div>
+            <div class="form-group">
+                <label for="vols">Select Vol(s):</label>
+                <select id="vols" name="vols" class="form-control" multiple>
+                    <option th:each="vol : ${vols}" th:selected="${formPacke.vols.contains(vol)}" th:value="${vol.id}" th:text="${vol.flightNumber}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hotels">Select Hotel(s):</label>
+                <select id="hotels" name="hotels" class="form-control" multiple>
+                    <option th:each="hotel : ${hotels}" th:selected="${formPacke.hotels.contains(hotel)}" th:value="${hotel.id}" th:text="${hotel.nomHotel}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+</section>
+
+<script>
+    function showmenu() {
+        var menu = document.querySelector('.navbar');
+        menu.classList.toggle('active');
+    }
+</script>
+</body>
+</html>
