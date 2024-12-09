@@ -1,141 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Packe Management</title>
-  <link rel="stylesheet" href="/css/styleGeneral.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <style>
-    .container {
-      padding-top: 20px;
-    }
-    .row {
-      margin-top: 20px;
-    }
-  </style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packe Management</title>
+    <link rel="stylesheet" href="/css/styleGeneral.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .container {
+            padding-top: 20px;
+        }
+        .row {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 <header>
-  <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
-  <nav class="navbar">
-    <a href="#add">Add Packe</a>
-    <a href="#list">List Packes</a>
-    <a href="logout.php">Logout</a>
-  </nav>
+    <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+    <nav class="navbar">
+        <a href="#add">Add Packe</a>
+        <a href="#list">List Packes</a>
+        <a href="logout.php">Logout</a>
+    </nav>
+
 </header>
 
 <div style="margin: 50px; padding: 50px"></div>
 <section class="book" id="add">
-  <h1 class="heading">
-    <span>A</span>
-    <span>D</span>
-    <span>D</span>
-    &nbsp;
-    <span>P</span>
-    <span>A</span>
-    <span>C</span>
-    <span>K</span>
-    <span>E</span>
-  </h1>
 
-  <div class="row">
-    <div class="image">
-      <img style="width: 100%;" src="/images/voyage.png" alt="Add Packe">
+    <h1 class="heading">
+        <span>A</span>
+        <span>D</span>
+        <span>D</span>
+        &nbsp;
+        <span>P</span>
+        <span>A</span>
+        <span>C</span>
+        <span>K</span>
+        <span>E</span>
+    </h1>
+
+    <div class="row">
+        <div class="image">
+            <img style="width: 100%;" src="/images/packe.png" alt="Add Packe">
+        </div>
+
+        <form th:action="@{/packe/save}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nomPacke">Packe Name:</label>
+                <input type="text" id="nomPacke" name="nomPacke" class="form-control" placeholder="Packe Name" required>
+            </div>
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" class="form-control" placeholder="Description" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="prix">Price:</label>
+                <input type="number" step="0.01" id="prix" name="prix" class="form-control" placeholder="Price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="vols">Select Vol(s):</label>
+                <select id="vols" name="vols" class="form-control" multiple>
+                    <option th:each="vol : ${vols}" th:value="${vol.id}" th:text="${vol.flightNumber}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="hotels">Select Hotel(s):</label>
+                <select id="hotels" name="hotels" class="form-control" multiple>
+                    <option th:each="hotel : ${hotels}" th:value="${hotel.id}" th:text="${hotel.nomHotel}"></option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
-
-    <form th:action="@{/packe/save}" method="post" enctype="multipart/form-data">
-      <div class="form-group">
-        <label for="nomPacke">Packe Name:</label>
-        <input type="text" id="nomPacke" name="nomPacke" class="form-control" placeholder="Packe Name" required>
-      </div>
-      <div class="form-group">
-        <label for="image">Image:</label>
-        <input type="file" id="image" name="image" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" class="form-control" placeholder="Description" rows="3" required></textarea>
-      </div>
-      <div class="form-group">
-        <label for="prix">Price:</label>
-        <input type="number" step="0.01" id="prix" name="prix" class="form-control" placeholder="Price" required>
-      </div>
-
-      <div class="form-group">
-        <label for="vols">Select Vol(s):</label>
-        <select id="vols" name="vols" class="form-control" multiple>
-          <option th:each="vol : ${vols}" th:value="${vol.id}" th:text="${vol.flightNumber}"></option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="hotels">Select Hotel(s):</label>
-        <select id="hotels" name="hotels" class="form-control" multiple>
-          <option th:each="hotel : ${hotels}" th:value="${hotel.id}" th:text="${hotel.nomHotel}"></option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
 </section>
 
 <section class="displayPacke" id="list">
-  <h1 class="heading">
-    <span>D</span>
-    <span>I</span>
-    <span>S</span>
-    <span>P</span>
-    <span>L</span>
-    <span>A</span>
-    <span>Y</span>
-    &nbsp;
-    <span>P</span>
-    <span>A</span>
-    <span>C</span>
-    <span>K</span>
-    <span>E</span>
-  </h1>
+    <h1 class="heading">
+        <span>D</span>
+        <span>I</span>
+        <span>S</span>
+        <span>P</span>
+        <span>L</span>
+        <span>A</span>
+        <span>Y</span>
+        &nbsp;
+        <span>P</span>
+        <span>A</span>
+        <span>C</span>
+        <span>K</span>
+        <span>E</span>
+    </h1>
 
-  <div class="container">
-    <h1>List of Packes</h1>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Image</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="packe : ${packes}">
-        <td th:text="${packe.nomPacke}"></td>
-        <td><img th:src="@{'/images/' + ${packe.image}}" alt="Packe Image" style="width: 100px; height: auto;"></td>
-        <td th:text="${packe.description}"></td>
-        <td th:text="${packe.prix}"></td>
-        <td>
-          <a th:href="@{/deletePacke/{id}(id=${packe.id})}" class="btn btn-danger"
-             onclick="return confirm('Are you sure you want to delete this Packe?');">Delete</a>
-          <a th:href="@{/packe/addPacke}" class="btn btn-primary">Update</a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="container">
+        <h1>List of Packes</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="packe : ${packes}">
+                <td th:text="${packe.nomPacke}"></td>
+                <td>
+                    <img th:src="'data:image/png;base64,' + ${packe.image}" style="width: 100px; height: 100px;"/>
+                </td>                <td th:text="${packe.description}"></td>
+                <td th:text="${packe.prix}"></td>
+                <td>
+                    <a th:href="@{/packe/delete/{id}(id=${packe.id})}" class="btn btn-danger"
+                       onclick="return confirm('Are you sure you want to delete this Packe?');">Delete</a>
+                    <a th:href="@{/packe/update/{id}(id=${packe.id})}" class="btn btn-primary" onclick="return confirm('Are you sure you want to update this hotel?');">
+                        Update</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
 
 <script>
-  function showmenu() {
-    var menu = document.querySelector('.navbar');
-    menu.classList.toggle('active');
-  }
+    function showmenu() {
+        var menu = document.querySelector('.navbar');
+        menu.classList.toggle('active');
+    }
+
 </script>
 </body>
 </html>

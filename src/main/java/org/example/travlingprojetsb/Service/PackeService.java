@@ -50,7 +50,8 @@ public class PackeService {
         packe.setDescription(description);
         packe.setPrix(prix);
 
-        List<Vol> vols = volRepository.findAllById(volsIds);
+        List<Vol> vols = volRepository.findVolsByIds(volsIds);
+
         List<Hotel> hotels = hotelRepository.findHotelByIds(hotelsIds);
         packe.setVols(vols);
         packe.setHotels(hotels);
