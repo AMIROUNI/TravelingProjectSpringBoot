@@ -31,7 +31,7 @@ public class Passager {
     Long phone;
 
     //relation maony to one avec reservation
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 

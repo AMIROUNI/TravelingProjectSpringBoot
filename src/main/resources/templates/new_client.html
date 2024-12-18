@@ -108,9 +108,14 @@
                         <h3>Age</h3>
                         <input type="number" th:field="*{age}" placeholder="Age" name="age"/>
                     </div>
+
+
                     <div class="inputdiv">
-                        <h3>Sexe</h3>
-                        <input type="text" th:field="*{sexe}" placeholder="Sexe" name="sexe"/>
+                        <h3>sexe</h3>
+                        <select   th:field="*{sexe}" name="sexe" required>
+                            <option value="male">male</option>
+                            <option value="female">female</option>
+                        </select>
                     </div>
 
                     <div class="inputdiv">

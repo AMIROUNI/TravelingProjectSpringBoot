@@ -31,7 +31,9 @@ public class PassagerService {
             throw new RuntimeException("Passager not found with ID: " + id);
         }
     }
-
+public List<Passager> findByIdReservation(Long id_reservation){
+        return passagerRepository.findByIdReservation(id_reservation);
+}
 
     public List<Passager> findAllPassagers() {
         return passagerRepository.findAll();

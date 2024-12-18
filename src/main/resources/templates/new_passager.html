@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Passagers</title>
+    <link rel="stylesheet" href="/css/styleGeneral.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<header>
+    <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="#book">Book</a>
+        <a href="new_packe.html">Packages</a>
+        <a th:href="@{/hotel}">hotels</a>
+        <a href="logout.php">Logout</a>
+    </nav>
+</header>
+
+<div style="margin: 50px; padding: 50px"></div>
+
+<section class="book" id="book">
+    <h1 class="heading">
+        <span>A</span>
+        <span>d</span>
+        <span>d</span>
+        &nbsp;
+        <span>P</span>
+        <span>a</span>
+        <span>s</span>
+        <span>s</span>
+        <span>a</span>
+        <span>g</span>
+        <span>e</span>
+        <span>r</span>
+    </h1>
+
+    <div class="row">
+        <div class="image">
+            <img src="/images/book-img.svg" alt=""/>
+        </div>
+        <form th:action="@{/passagers/savePassager}" th:object="${formPassager}" method="POST">
+
+            <input type="hidden" name="reservationId" th:value="${reservation.id}" />
+
+            <div class="inputdiv">
+                <h3>CIN</h3>
+                <input type="number" th:field="*{CIN}" placeholder="CIN" name="cin" required/>
+            </div>
+            <div class="inputdiv">
+                <h3>First Name</h3>
+                <input type="text" th:field="*{nom}" placeholder="First Name" name="nom" required/>
+            </div>
+            <div class="inputdiv">
+                <h3>Last Name</h3>
+                <input type="text" th:field="*{prenom}" placeholder="Last Name" name="prenom" required/>
+            </div>
+            <div class="inputdiv">
+                <h3>Phone Number</h3>
+                <input type="text" th:field="*{phone}" placeholder="Phone Number" name="phone" required/>
+            </div>
+            <div class="inputdiv">
+                <input type="submit" class="btn" value="Add Passager"/>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section class="displayPassagers">
+    <h1 class="heading">
+        <span>D</span>
+        <span>I</span>
+        <span>S</span>
+        <span>P</span>
+        <span>L</span>
+        <span>A</span>
+        <span>Y</span>
+        &nbsp;
+        <span>P</span>
+        <span>a</span>
+        <span>s</span>
+        <span>s</span>
+        <span>a</span>
+        <span>g</span>
+        <span>e</span>
+        <span>r</span>
+    </h1>
+    <div class="container">
+        <h2>Passagers List</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>CIN</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+                <th>Reservation ID</th>
+                <th>Delete</th>
+                <th>Update</th>
+            </tr>
+            </thead>
+            <tr th:each="passager : ${passagers}">
+                <td th:text="${passager.id}"></td>
+                <td th:text="${passager.CIN}"></td>
+                <td th:text="${passager.nom}"></td>
+                <td th:text="${passager.prenom}"></td>
+                <td th:text="${passager.phone}"></td>
+                <td th:text="${passager.reservation.id}"></td>
+
+                <td>
+                    <a th:href="@{/passagers/deletePassager/{reservationId}/{id}(reservationId=${passager.reservation.id}, id=${passager.id})}" class="btn btn-danger">Delete</a>
+<!--                    <a th:href="@{/editPassager/{reservationId}/{id}(reservationId=${passager.reservation.id})(id=${passager.id})}" class="btn btn-warning">Edit</a>-->
+                    <a th:href="@{/passagers/editPassager/{reservationId}/{id}(reservationId=${passager.reservation.id}, id=${passager.id})}" class="btn btn-warning">Edit</a>
+
+<!--                    <a th:href="@{/passagers/editPassager/{resId}(resID=${passager.reservation.id})/{id}(id=${passager.id})}" class="btn btn-warning">Edit</a>-->
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+<section class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>About Us</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis temporibus quas quasi facere.</p>
+        </div>
+        <div class="box">
+            <h3>Branches</h3>
+            <a href="#">Egypt</a>
+            <a href="#">London</a>
+            <a href="#">Korea</a>
+            <a href="#">Japan</a>
+        </div>
+        <div class="box">
+            <h3>Quick Links</h3>
+            <a href="#">Home</a>
+            <a href="#">Book</a>
+            <a href="#">Packages</a>
+            <a href="#">Services</a>
+        </div>
+        <div class="box">
+            <h3>Follow Us</h3>
+            <a href="#">Facebook</a>
+            <a href="#">Instagram</a>
+            <a href="#">Twitter</a>
+        </div>
+    </div>
+    <h1 class="created">Created by <span>Eslam Soliman</span> | All rights reserved</h1>
+</section>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Manage Passagers</title>-->
+<!--    <link rel="stylesheet" href="/css/styleGeneral.css">-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<header>-->
+<!--    <nav class="navbar">-->
+<!--        <a href="#home">Home</a>-->
+<!--        <a href="#book">Book</a>-->
+<!--        <a href="#packages">Packages</a>-->
+<!--        <a href="#services">Services</a>-->
+<!--        <a href="/logout">Logout</a>-->
+<!--    </nav>-->
+<!--</header>-->
+
+<!--<section id="add-passager">-->
+<!--    <h1>Add Passenger</h1>-->
+<!--    <form th:action="@{/passagers/savePassager}" th:object="${formPassager}" method="POST">-->
+<!--        <input type="hidden" name="reservationId" th:value="${reservation.id}" />-->
+<!--        <div>-->
+<!--            <label for="cin">CIN:</label>-->
+<!--            <input type="number" id="cin" th:field="*{CIN}" name="cin" placeholder="CIN" required />-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="nom">First Name:</label>-->
+<!--            <input type="text" id="nom" th:field="*{nom}" name="nom" placeholder="First Name" required />-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="prenom">Last Name:</label>-->
+<!--            <input type="text" id="prenom" th:field="*{prenom}" name="prenom" placeholder="Last Name" required />-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="phone">Phone Number:</label>-->
+<!--            <input type="text" id="phone" th:field="*{phone}" name="phone" placeholder="Phone Number" required />-->
+<!--        </div>-->
+<!--        <button type="submit" class="btn btn-primary">Add Passenger</button>-->
+<!--    </form>-->
+<!--</section>-->
+
+<!--<section id="list-passagers">-->
+<!--    <h1>Passengers for Reservation: <span th:text="${reservation.id}"></span></h1>-->
+<!--    <table class="table table-striped">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>ID</th>-->
+<!--            <th>CIN</th>-->
+<!--            <th>First Name</th>-->
+<!--            <th>Last Name</th>-->
+<!--            <th>Phone</th>-->
+<!--            <th>Actions</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="passager : ${passagers}">-->
+<!--            <td th:text="${passager.id}"></td>-->
+<!--            <td th:text="${passager.CIN}"></td>-->
+<!--            <td th:text="${passager.nom}"></td>-->
+<!--            <td th:text="${passager.prenom}"></td>-->
+<!--            <td th:text="${passager.phone}"></td>-->
+<!--            <td>-->
+<!--                <a th:href="@{/passagers/deletePassager/{id}(id=${passager.id})}" class="btn btn-danger">Delete</a>-->
+<!--                <a th:href="@{/passagers/editPassager/{id}(id=${passager.id})}" class="btn btn-warning">Edit</a>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</section>-->
+
+<!--</body>-->
+<!--</html>-->

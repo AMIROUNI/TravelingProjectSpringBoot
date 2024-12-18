@@ -123,6 +123,37 @@
             <span>e</span>
             <span>s</span>
         </h1>
+        <div class="container">
+            <div class="row">
+                <!-- Loop through all Packes -->
+                <th:block th:each="packe : ${packes}">
+                    <div class="box">
+                        <!-- Display Packe Image -->
+                        <img th:src="'data:image/png;base64,' + ${packe.image}" alt="Package Image">
+
+                        <div class="content">
+                            <!-- Display Packe Name -->
+                            <h3><i class="fas fa-map-marker-alt"></i> <span th:text="${packe.nomPacke}"></span></h3>
+                            <!-- Display Packe Description -->
+                            <p th:text="${packe.description}">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam!</p>
+
+                            <div class="stars">
+                                <!-- Assuming packe.rating is a number from 1 to 5 -->
+                                <i class="fas fa-star" th:each="star : ${#numbers.sequence(1, packe.rating)}"></i>
+                                <i class="far fa-star" th:each="star : ${#numbers.sequence(packe.rating + 1, 5)}"></i>
+                            </div>
+
+                            <!-- Display Packe Price -->
+                            <div class="price">
+                                <span th:text="${packe.prix}">90.00</span> <span >1200.000</span>
+                            </div>
+                            <!-- Button to view the details of the package -->
+                            <a th:href="@{/packe/detail/{id}(id=${packe.id})}" class="btn">Check Now</a>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
 
         <div class="container">
             <div class="box">

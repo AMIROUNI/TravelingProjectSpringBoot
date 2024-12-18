@@ -1,140 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Booking Form HTML Template</title>
-	<link href="https://fonts.googleapis.com/css?family=Cardo:700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
-	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
-	<link type="text/css" rel="stylesheet" href="/css/reservation.css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gestion des Réservations</title>
+	<link rel="stylesheet" href="/css/styleGeneral.css">
+	<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 	<style>
-		#booking {
-			font-family: 'Josefin Sans', sans-serif;
-			background-image: url('/images/background.jpg');
-			background-size: cover;
-			background-position: center;
+		body {
+			font-family: 'Poppins', sans-serif;
+			background-color: #f5f5f5;
+		}
+
+		.heading {
+			font-size: 2.5em;
+			text-align: center;
+			margin: 20px 0;
+			color: #333;
+		}
+
+		.book {
+			padding: 20px;
+			background: #fff;
+			border-radius: 8px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			margin: 20px auto;
+			max-width: 1000px;
+		}
+
+		.inputdiv h3 {
+			margin: 10px 0;
+			color: #555;
+		}
+
+		.btn {
+			background-color: #0275d8;
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.btn:hover {
+			background-color: #0256a7;
+		}
+
+		table {
+			width: 100%;
+			margin: 20px 0;
+			border-collapse: collapse;
+		}
+
+		table th, table td {
+			border: 1px solid #ddd;
+			padding: 8px;
+			text-align: left;
+		}
+
+		table th {
+			background-color: #0275d8;
+			color: white;
 		}
 	</style>
 </head>
-
 <body>
-<div id="booking" class="section">
-	<div class="section-center">
-		<div class="container">
-			<div class="row">
-				<div class="booking-form">
-					<div class="form-header">
-						<h1>Make your reservation</h1>
-					</div>
-					<form method="post" action="/reserve">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<span class="form-label">Check In</span>
-									<input class="form-control" type="date" name="checkIn" required>
-								</div>
-								<span class="in-out hidden-xs hidden-sm">&#8652;</span>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<span class="form-label">Check out</span>
-									<input class="form-control" type="date" name="checkOut" required>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3">
-								<div class="form-group">
-									<span class="form-label">No of rooms</span>
-									<select class="form-control" name="rooms" required>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-									</select>
-									<span class="select-arrow"></span>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<span class="form-label">Adults</span>
-									<select class="form-control" name="adults" required>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-									</select>
-									<span class="select-arrow"></span>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<span class="form-label">Children</span>
-									<select class="form-control" name="children" required>
-										<option value="0">0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-									</select>
-									<span class="select-arrow"></span>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-btn">
-									<button class="submit-btn">Check availability</button>
-								</div>
-							</div>
-						</div>
-						<div class="form-group">
-							<span class="form-label">Description</span>
-							<input class="form-control" type="text" name="description" required>
-						</div>
-						<div class="form-group">
-							<span class="form-label">Date of Reservation</span>
-							<input class="form-control" type="date" name="dateDeResrvation" required>
-						</div>
 
-						<div class="form-group">
-							<span class="form-label">Number of Passengers</span>
-							<input class="form-control" type="number" id="numPassengers" name="numPassengers" min="1" required>
-						</div>
-						<div id="passengerFields"></div>
-						<div class="form-btn">
-							<button class="submit-btn" name="submit">Reserve now</button>
-						</div>
-					</form>
-				</div>
-			</div>
+<header>
+	<div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+	<nav class="navbar">
+		<a href="#add-reservation">Ajouter une réservation</a>
+		<a href="#reservation-list">Afficher les réservations</a>
+		<a href="logout.php">Déconnexion</a>
+	</nav>
+</header>
+
+<section id="add-reservation" class="book">
+	<h1 class="heading">
+		<span>A</span>
+		<span>j</span>
+		<span>o</span>
+		<span>u</span>
+		<span>t</span>
+		&nbsp;
+		<span>R</span>
+		<span>é</span>
+		<span>s</span>
+		<span>e</span>
+		<span>r</span>
+		<span>v</span>
+		<span>a</span>
+		<span>t</span>
+		<span>i</span>
+		<span>o</span>
+		<span>n</span>
+	</h1>
+
+	<form th:action="@{/reservations/saveReservation}" method="POST">
+		<div class="inputdiv">
+			<h3>Nom du client</h3>
+			<select name="clientId" required>
+				<option value="" disabled selected>-- Sélectionner un client --</option>
+				<option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.prename}"></option>
+			</select>
 		</div>
-	</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="/js/script.js"></script>
-<script>
-	document.getElementById('numPassengers').addEventListener('input', function() {
-		var numPassengers = this.value;
-		var passengerFields = document.getElementById('passengerFields');
-		passengerFields.innerHTML = '';
-		for (var i = 0; i < numPassengers; i++) {
-			passengerFields.innerHTML += `
-                    <div class="form-group">
-                        <span class="form-label">Passenger ${i + 1} Name</span>
-                        <input class="form-control" type="text" name="passenger${i + 1}Name" required>
-                    </div>
-                    <div class="form-group">
-                        <span class="form-label">Passenger ${i + 1} CIN</span>
-                        <input class="form-control" type="text" name="passenger${i + 1}CIN" required>
-                    </div>
-                    <div class="form-group">
-                        <span class="form-label">Passenger ${i + 1} Phone</span>
-                        <input class="form-control" type="text" name="passenger${i + 1}Phone" required>
-                    </div>
-                `;
-		}
-	});
-</script>
-</body>
 
+		<div class="inputdiv">
+			<h3>Numéro de package</h3>
+			<select name="packageId" required>
+				<option value="" disabled selected>-- Sélectionner un package --</option>
+				<option th:each="package : ${packages}" th:value="${package.id}" th:text="${package.nomPacke}"></option>
+			</select>
+		</div>
+
+		<div class="inputdiv">
+			<h3>Date de réservation</h3>
+			<input type="date" name="dateReservation" required>
+		</div>
+
+		<div class="inputdiv">
+			<h3>Statut</h3>
+			<select name="statut" required>
+				<option value="CONFIRMEE">Confirmée</option>
+				<option value="EN_ATTENTE">En attente</option>
+				<option value="ANNULEE">Annulée</option>
+			</select>
+		</div>
+
+		<div class="inputdiv">
+			<input type="submit" class="btn" value="Ajouter la réservation">
+		</div>
+	</form>
+</section>
+
+<section id="reservation-list">
+	<h1 class="heading">
+		<span>L</span>
+		<span>i</span>
+		<span>s</span>
+		<span>t</span>
+		<span>e</span>
+		&nbsp;
+		<span>R</span>
+		<span>é</span>
+		<span>s</span>
+		<span>e</span>
+		<span>r</span>
+		<span>v</span>
+		<span>a</span>
+		<span>t</span>
+		<span>i</span>
+		<span>o</span>
+		<span>n</span>
+	</h1>
+
+	<div class="container">
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>Client</th>
+				<th>Package</th>
+				<th>Date</th>
+				<th>Statut</th>
+				<th>Actions</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="reservation : ${reservations}">
+				<td th:text="${reservation.client.prename}"></td>
+				<td th:text="${reservation.packe.nomPacke}"></td>
+				<td th:text="${reservation.dateDeResrvation}"></td>
+				<td th:text="${reservation.etat}"></td>
+				<td>
+					<a th:href="@{/reservations/update/{id}(id=${reservation.id})}" class="btn btn-primary">Update</a>
+					<a th:href="@{/reservations/delete/{id}(id=${reservation.id})}" class="btn btn-primary">Delete</a>
+					<a th:href= "@{/reservations/add-passager/{id}(id=${reservation.id})}" class="btn btn-primary">Add Passager</a>
+
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</section>
+
+</body>
 </html>

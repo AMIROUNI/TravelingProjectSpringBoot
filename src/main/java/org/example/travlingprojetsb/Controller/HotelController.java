@@ -65,4 +65,8 @@ public class HotelController {
         hotelService.updateHotel(hotel);
         return "redirect:/hotel/list";
     }
+    @GetMapping()
+    public String showHotelPage() {
+        return "new_hotel";  // This returns the new_hotel.html page
+    }
 }

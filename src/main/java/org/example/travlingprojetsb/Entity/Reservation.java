@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.travlingprojetsb.Enum.EtatDeReservation;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -23,17 +25,17 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String description;
 
     @Column(nullable = false)
-    private Date dateDeResrvation;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    LocalDate  dateDeResrvation;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EtatDeReservation etat= EtatDeReservation.EN_ATTENTE; // État de la réservation
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "HH:mm")
     private Date timeDeResrvation = new Date();
 
     @ManyToOne

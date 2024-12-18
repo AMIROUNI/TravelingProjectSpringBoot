@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Reservation</title>
+    <link rel="stylesheet" href="/css/styleGeneral.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+
+<header>
+    <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+    <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#add-reservation">Add Reservation</a>
+        <a href="#reservation-list">Reservations</a>
+        <a href="logout.php">Logout</a>
+    </nav>
+</header>
+
+<section id="update-reservation" class="book">
+    <h1 class="heading">
+        <span>U</span><span>P</span><span>D</span><span>A</span><span>T</span><span>E</span>&nbsp;<span>R</span><span>E</span><span>S</span><span>E</span><span>R</span><span>V</span><span>A</span><span>T</span><span>I</span><span>O</span><span>N</span>
+    </h1>
+
+    <form th:action="@{/reservations/update/{id}(id=${formUpdateReservation.id})}" method="POST">
+        <div class="form-group">
+            <label for="clientId">Client Name:</label>
+            <select name="clientId" id="clientId" class="form-control" required>
+                <option value="" disabled>Select a client</option>
+                <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.prename}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="packageId">Package Number:</label>
+            <select name="packageId" id="packageId" class="form-control" required>
+                <option value="" disabled>Select a package</option>
+                <option th:each="package : ${packages}" th:value="${package.id}" th:text="${package.nomPacke}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="dateReservation">Reservation Date:</label>
+            <input type="date" name="dateReservation" id="dateReservation" class="form-control" th:value="${formUpdateReservation.dateDeResrvation}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="statut">Status:</label>
+            <select name="statut" id="statut" class="form-control" required>
+                <option value="CONFIRMEE" th:selected="${formUpdateReservation.etat == T(org.example.travlingprojetsb.Enum.EtatDeReservation).CONFIRMEE}">Confirmed</option>
+                <option value="EN_ATTENTE" th:selected="${formUpdateReservation.etat == T(org.example.travlingprojetsb.Enum.EtatDeReservation).EN_ATTENTE}">Pending</option>
+                <option value="ANNULEE" th:selected="${formUpdateReservation.etat == T(org.example.travlingprojetsb.Enum.EtatDeReservation).ANNULEE}">Cancelled</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Reservation</button>
+    </form>
+</section>
+
+<script>
+    function showmenu() {
+        var menu = document.querySelector('.navbar');
+        menu.classList.toggle('active');
+    }
+</script>
+
+</body>
+</html>

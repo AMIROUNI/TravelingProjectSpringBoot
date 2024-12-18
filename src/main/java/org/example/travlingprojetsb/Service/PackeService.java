@@ -36,7 +36,7 @@ public class PackeService {
                 .orElseThrow(() -> new RuntimeException("Packe not found with ID: " + id));
     }
 
-    public void savePackeToDB(MultipartFile file, String nomPacke, String description, float prix, List<Long> volsIds, List<Long> hotelsIds) {
+    public void savePackeToDB(MultipartFile file, String nomPacke, String description, float prix,int rating, List<Long> volsIds, List<Long> hotelsIds) {
         Packe packe = new Packe();
         try {
             if (!file.isEmpty()) {
@@ -49,6 +49,7 @@ public class PackeService {
         packe.setNomPacke(nomPacke);
         packe.setDescription(description);
         packe.setPrix(prix);
+        packe.setRating(rating);
 
         List<Vol> vols = volRepository.findVolsByIds(volsIds);
 

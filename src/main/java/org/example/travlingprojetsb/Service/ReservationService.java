@@ -45,4 +45,8 @@ public class ReservationService {
         reservation.setEtat(etat);
         return reservationRepository.save(reservation);
     }
+
+    public void updateReservation(Reservation reservation) {
+        reservationRepository.saveAndFlush(reservation);
+    }
 }
