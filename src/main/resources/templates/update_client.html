@@ -17,12 +17,15 @@
 <header>
   <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
   <nav class="navbar">
-    <a href="#home">home</a>
-    <a href="#book">book</a>
-    <a href="#packages">packages</a>
-    <a href="#services">services</a>
+    <a th:href="@{/}">home</a>
+    <a th:href="@{/hotel}">hotels</a>
+    <a th:href="@{/ville/list}">villes</a>
+    <a th:href="@{/aeroport}">aeroports</a>
+    <a th:href="@{/clients}">clients</a>
+    <a th:href="@{/vols/allVol}">vols</a>
+    <a th:href="@{/reservations/all}">reservation</a>
+    <a th:href="@{/packe/list}">packages</a>
     <a href="itemPage.php">Items</a>
-    <a href="adminReservation.php">reservation</a>
     <a href="logout.php">logout</a>
   </nav>
 </header>

@@ -32,7 +32,7 @@ public class AeroportController {
         // Save the Aeroport
         aeroportService.addAeroport(aeroport);
 
-        return "redirect:/aeroport/allAeroports"; // Redirect to the list of all airports after saving
+        return "redirect:/aeroport"; // Redirect to the list of all airports after saving
     }
 
 
@@ -60,7 +60,7 @@ public class AeroportController {
     @GetMapping("/deleteAeroport/{id}")
     public String deleteAeroportById(@PathVariable("id") Long id) {
         aeroportService.deleteAeroportById(id);
-        return "redirect:/aeroport/allAeroports";
+        return "redirect:/aeroport";
     }
 
     @GetMapping("/updateAeroport/{id}")
@@ -76,13 +76,13 @@ public class AeroportController {
     public String updateAerorport(@PathVariable("id") long id, Aeroport aeroport,@RequestParam("ville") Long villeId) {
         Ville ville = villeService.findVilleById(villeId);
         aeroport.setVille(ville);
-        aeroportService.updateAeroport(aeroport);        return "redirect:/aeroport/allAeroports";
+        aeroportService.updateAeroport(aeroport);        return "redirect:/aeroport";
     }
 
 
 
 
-    @RequestMapping("/allAeroports")
+    @RequestMapping()
     public String listAllAeroports(Model model) {
         model.addAttribute("aeroports", aeroportService.findAllAeroports());
 
