@@ -61,13 +61,7 @@ public class AuthController {
 
     }
 
-    //handler methods for getting list of users.
-    @GetMapping("/users")
-    public String users(Model model){
-        List<UserDto> users = userService.findAllUsers();
-        model.addAttribute("users",users);
-        return "users";
-    }
+
 
     //handler methods for handling login request.
 

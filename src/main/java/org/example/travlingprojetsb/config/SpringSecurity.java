@@ -40,13 +40,14 @@ public class SpringSecurity {
                             .requestMatchers("/register/**", "/").permitAll()
 
                             // Role-based access control
-                            .requestMatchers("/hotel", "/hotel/list").hasAnyRole("ADMIN_HOTEL", "ADMIN")
-                            .requestMatchers("/ville/list").hasAnyRole("ADMIN_VOL", "ADMIN")
-                            .requestMatchers("/aeroport").hasAnyRole("ADMIN_HOTEL", "ADMIN")
-                            .requestMatchers("/clients").hasRole("ADMIN")
-                            .requestMatchers("/vols/allVol").hasAnyRole("ADMIN_VOL", "ADMIN")
-                            .requestMatchers("/reservations/all").hasAnyRole("ADMIN_HOTEL", "ADMIN_VOL", "ADMIN")
-                            .requestMatchers("/packe/list").hasAnyRole("ADMIN_HOTEL", "ADMIN_VOL", "ADMIN")
+                            .requestMatchers("/hotel/**").hasAnyRole("ADMIN_HOTEL", "ADMIN")
+                            .requestMatchers("/ville/**").hasAnyRole("ADMIN_VOL", "ADMIN")
+                            .requestMatchers("/aeroport/**").hasAnyRole("ADMIN_HOTEL", "ADMIN")
+                            .requestMatchers("/clients/**").hasRole("ADMIN")
+                            .requestMatchers("/users/**").hasRole("ADMIN")
+                            .requestMatchers("/vols/**").hasAnyRole("ADMIN_VOL", "ADMIN")
+                            .requestMatchers("/reservations/**").hasAnyRole("ADMIN_HOTEL", "ADMIN_VOL", "ADMIN")
+                            .requestMatchers("/packe/**").hasAnyRole("ADMIN_HOTEL", "ADMIN_VOL", "ADMIN")
 
                             // All other requests require authentication
                             .anyRequest().authenticated()

@@ -1,11 +1,14 @@
 package org.example.travlingprojetsb.Service.impl;
 
+import org.example.travlingprojetsb.Entity.Client;
 import org.example.travlingprojetsb.Entity.Role;
 import org.example.travlingprojetsb.Entity.User;
+import org.example.travlingprojetsb.Repository.ClientRepository;
 import org.example.travlingprojetsb.Repository.RoleRepository;
 import org.example.travlingprojetsb.Repository.UserRepository;
 import org.example.travlingprojetsb.Service.UserService;
 import org.example.travlingprojetsb.dto.UserDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +16,20 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+    @Autowired
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+
+
+//    public User updateUser(User user){
+//        return   userRepository.saveAndFlush(user);
+//    }
+
 
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder){ //no need for one constructor to have @Autowired annotation.
         this.userRepository=userRepository;
@@ -33,7 +44,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(userDto.getPassword())); // before setting the password we are encrypting using Bcrypt by Spring security.
 
         //userRepository.save(user);
-
         Role role = roleRepository.findByName("ROLE_CLIENT");
 
         if(role==null){
@@ -41,7 +51,17 @@ public class UserServiceImpl implements UserService {
         }
         user.setRoles(Arrays.asList(role));   //As we have list of roles field in user checking any role in db exists or not if not creating by a private function and saving it in db
         userRepository.save(user); // now saving user to db.
+    }
 
+    @Override
+    public User updateUser(User user,List<Role> roles) {
+
+         //conversion of form data to jpa entity, here mapper won't work as userDto don't have common attributes with User.
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // before setting the password we are encrypting using Bcrypt by Spring security.
+
+        user.setRoles(roles);
+        return  userRepository.saveAndFlush(user);
+        // now saving user to db.
     }
 
     @Override
@@ -68,4 +88,12 @@ public class UserServiceImpl implements UserService {
         role.setName("ROLE_CLIENT");
         return roleRepository.save(role);
     }
+
+    @Override
+    public User findById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null); // Return the user or null if not found
+    }
+
+
 }
