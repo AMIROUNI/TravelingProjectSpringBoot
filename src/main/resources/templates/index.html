@@ -145,10 +145,11 @@
 
                             <!-- Display Packe Price -->
                             <div class="price">
-                                <span th:text="${packe.prix}">90.00</span> <span >1200.000</span>
+                                <span class="price" th:text="${packe.prix}">90.00</span>
                             </div>
                             <!-- Button to view the details of the package -->
                             <a th:href="@{/packe/detail/{id}(id=${packe.id})}" class="btn">Check Now</a>
+                            <a th:href="@{/reservations/userDoReseravation/{id}(id=${packe.id})}" class="btn">reservation</a>
                         </div>
                     </div>
                 </th:block>

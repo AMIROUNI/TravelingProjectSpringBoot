@@ -1,9 +1,7 @@
 package org.example.travlingprojetsb.Service.impl;
 
-import org.example.travlingprojetsb.Entity.Client;
 import org.example.travlingprojetsb.Entity.Role;
 import org.example.travlingprojetsb.Entity.User;
-import org.example.travlingprojetsb.Repository.ClientRepository;
 import org.example.travlingprojetsb.Repository.RoleRepository;
 import org.example.travlingprojetsb.Repository.UserRepository;
 import org.example.travlingprojetsb.Service.UserService;

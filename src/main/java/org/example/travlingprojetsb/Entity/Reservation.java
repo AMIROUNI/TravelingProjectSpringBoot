@@ -11,8 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.Enum;
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor
@@ -39,8 +38,8 @@ public class Reservation {
     private Date timeDeResrvation = new Date();
 
     @ManyToOne
-    @JoinColumn(name = "id_client")
-    private Client  client;
+    @JoinColumn(name = "id_user")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "id_packe") // Foreign key column
@@ -48,5 +47,6 @@ public class Reservation {
 
     @OneToMany (mappedBy = "reservation",cascade = CascadeType.REMOVE)
     List<Passager> passagers;
+
 
 }

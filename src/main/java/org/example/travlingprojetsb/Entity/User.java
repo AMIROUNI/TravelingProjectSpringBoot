@@ -26,6 +26,18 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
+    @Column
+    Integer age;
+    @Column
+    String address ;
+    @Column
+    String sex ;
+    @Column()
+    Integer CIN ;
+    @Column()
+    Integer telephone;
+    @OneToMany (mappedBy = "user",cascade = CascadeType.REMOVE)
+    List<Reservation> reservations;
 
 
 

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation Client</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* General Body Styling */
+        body {
+            background-image: url('/images/background.jpg'); /* Add your background image here */
+            background-size: cover; /* Ensure the image covers the entire background */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            font-family: 'Poppins', sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Form Container Styling */
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Form Title Styling */
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #007bff;
+            font-size: 28px;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .form-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background-color: #007bff;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* Input Field Styling */
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 8px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+            outline: none;
+        }
+
+        /* Label Styling */
+        .form-label {
+            font-weight: 500;
+            color: #333;
+            font-size: 16px;
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        /* Passenger Container Styling */
+        #passagerContainer {
+            margin-top: 20px;
+        }
+
+        #passagerContainer h5 {
+            font-size: 18px;
+            color: #007bff;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        #passagerContainer hr {
+            border: 0;
+            border-top: 1px solid #e0e0e0;
+            margin: 20px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            .form-title {
+                font-size: 24px;
+            }
+
+            .form-control {
+                font-size: 14px;
+            }
+
+            .btn {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-container">
+        <h1 class="form-title">Réserver un Pack</h1>
+        <form method="post" action="/reservations/saveClientReservation">
+
+            <!-- Hidden Fields for Client and Packet IDs -->
+            <input type="hidden" name="id_client" th:value="${id_client}">
+            <input type="hidden" name="id_packet" th:value="${id_packet}">
+
+            <!-- Reservation Date -->
+            <div class="mb-3">
+                <label for="dateDeResrvation" class="form-label">Date de Réservation</label>
+                <input type="date" class="form-control" id="dateDeResrvation" name="dateDeResrvation" required>
+            </div>
+
+            <!-- Number of Passengers -->
+            <div class="mb-3">
+                <label for="nombrePassagers" class="form-label">Nombre de Passagers</label>
+                <input type="number" class="form-control" id="nombrePassagers" name="nombrePassagers" min="1" max="10" required>
+            </div>
+
+            <!-- Passenger Fields Container -->
+            <div id="passagerContainer"></div>
+
+            <!-- Button to Generate Passenger Fields -->
+            <button type="button" class="btn btn-secondary my-3" id="generatePassagers">Générer les Passagers</button>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100">Enregistrer la Réservation</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#generatePassagers').on('click', function () {
+            const passagerContainer = $('#passagerContainer');
+            const nombrePassagers = parseInt($('#nombrePassagers').val());
+
+            // Reset Fields
+            passagerContainer.empty();
+
+            if (!nombrePassagers || nombrePassagers < 1) {
+                alert('Veuillez entrer un nombre valide de passagers.');
+                return;
+            }
+
+            // Generate Fields for Each Passenger
+            for (let i = 0; i < nombrePassagers; i++) {
+                passagerContainer.append(`
+                    <div class="mb-3">
+                        <h5>Passager ${i + 1}</h5>
+                        <label for="passagers[${i}].CIN" class="form-label">CIN</label>
+                        <input type="number" class="form-control" name="passagers[${i}].CIN" required>
+
+                        <label for="passagers[${i}].nom" class="form-label">Nom</label>
+                        <input type="text" class="form-control" name="passagers[${i}].nom" required>
+
+                        <label for="passagers[${i}].prenom" class="form-label">Prénom</label>
+                        <input type="text" class="form-control" name="passagers[${i}].prenom" required>
+
+                        <label for="passagers[${i}].phone" class="form-label">Téléphone</label>
+                        <input type="tel" class="form-control" name="passagers[${i}].phone" required>
+                    </div>
+                    <hr>
+                `);
+            }
+        });
+    });
+</script>
+</body>
+</html>
