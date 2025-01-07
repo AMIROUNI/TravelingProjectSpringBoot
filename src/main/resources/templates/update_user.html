@@ -1,32 +1,78 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Update User</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link rel="stylesheet" href="/css/styleGeneral.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>Update User</h1>
-<form th:action="@{/users/update/{id}(id=${user.id})}" method="post">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" th:value="${user.name}" required>
+
+<header>
+    <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+    <nav class="navbar">
+        <a th:href="@{/}">home</a>
+        <a th:href="@{/hotel}">hotels</a>
+        <a th:href="@{/ville/list}">villes</a>
+        <a th:href="@{/aeroport}">aeroports</a>
+        <a th:href="@{/clients}">clients</a>
+        <a th:href="@{/vols/allVol}">vols</a>
+        <a th:href="@{/reservations/all}">reservation</a>
+        <a th:href="@{/packe/list}">packages</a>
+        <a href="itemPage.php">Items</a>
+        <a href="logout.php">logout</a>
+    </nav>
+</header>
+
+<section class="book" id="book">
+    <h1 class="heading">
+        <span>U</span>
+        <span>P</span>
+        <span>D</span>
+        <span>A</span>
+        <span>T</span>
+        <span>E</span>
+        &nbsp;
+        &nbsp;
+        <span>U</span>
+        <span>S</span>
+        <span>E</span>
+        <span>R</span>
+    </h1>
+
+    <div class="row">
+        <div class="image">
+            <img style="width: 100vh;" src="/images/user.jpg" alt="Update User">
+        </div>
+        <form th:action="@{/users/update/{id}(id=${user.id})}" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" th:value="${user.name}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" th:value="${user.email}" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="roles">Roles:</label>
+                <select id="roles" name="roleIds" class="form-control" multiple required>
+                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}" th:selected="${user.roles.contains(role)}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
     </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" th:value="${user.email}" required>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-    </div>
-    <div>
-        <label for="roles">Roles:</label>
-        <select id="roles" name="roleIds" multiple required>
-            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"
-                    th:selected="${user.roles.contains(role)}"></option>
-        </select>
-    </div>
-    <button type="submit">Update</button>
-</form>
-<a th:href="@{/users}">Back to Users</a>
+</section>
+
 </body>
 </html>

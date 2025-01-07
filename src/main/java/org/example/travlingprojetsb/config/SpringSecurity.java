@@ -21,8 +21,7 @@ public class SpringSecurity {
 
     @Bean
     public static PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(); //From Spring6 no need to set user details , it will automatically set user details, service and password encoded objects to auntication.
-    }
+        return new BCryptPasswordEncoder(); }
 
     // configure SecurityFilterChain
 

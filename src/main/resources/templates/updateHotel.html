@@ -23,7 +23,6 @@
         }
     </style>
 </head>
-</head>
 <body>
 
 <header>
@@ -42,8 +41,6 @@
     </nav>
 </header>
 
-
-
 <section class="book" id="book">
     <h1 class="heading">
         <span>U</span>
@@ -61,45 +58,47 @@
         <span>L</span>
     </h1>
 
-
     <div class="row">
-    <div class="image">
-        <img style="width: 100vh;" src="/images/hotel.jpg" alt="Add Hotel">
+        <div class="image">
+            <img style="width: 100vh;" src="/images/hotel.jpg" alt="Add Hotel">
+        </div>
+        <form th:action="@{/hotel/updateHotel/{id}(id=${hotel.id})}" th:object="${hotel}" method="post">
+            <div class="form-group">
+                <label for="image">Hotel Image:</label>
+                <input type="file" id="image" name="image" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="nomHotel">Hotel Name:</label>
+                <input type="text" id="nomHotel" name="nomHotel" class="form-control" placeholder="Hotel Name" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" class="form-control" placeholder="Description" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="nombreEtoiles">Number of Stars:</label>
+                <input type="number" id="nombreEtoiles" name="nombreEtoiles" class="form-control" min="1" max="5" required>
+            </div>
+            <div class="form-group">
+                <label for="latitude">Latitude:</label>
+                <input type="text" id="latitude" name="latitude" class="form-control" readonly required>
+            </div>
+            <div class="form-group">
+                <label for="longitude">Longitude:</label>
+                <input type="text" id="longitude" name="longitude" class="form-control" readonly required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
     </div>
-<form th:action="@{/hotel/updateHotel/{id}(id=${hotel.id})}" th:object="${hotel}" method="post">
-    <div class="form-group">
-        <label for="image">Hotel Image:</label>
-        <input type="file" id="image" name="image" class="form-control" required>
-    </div>
-    <div class="form-group">
-        <label for="nomHotel">Hotel Name:</label>
-        <input type="text" id="nomHotel" name="nomHotel" class="form-control" placeholder="Hotel Name" required>
-    </div>
-    <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" class="form-control" placeholder="Description" rows="3" required></textarea>
-    </div>
-    <div class="form-group">
-        <label for="nombreEtoiles">Number of Stars:</label>
-        <input type="number" id="nombreEtoiles" name="nombreEtoiles" class="form-control" min="1" max="5" required>
-    </div>
-    <div class="form-group">
-        <label for="latitude">Latitude:</label>
-        <input type="text" id="latitude" name="latitude" class="form-control" readonly required>
-    </div>
-    <div class="form-group">
-        <label for="longitude">Longitude:</label>
-        <input type="text" id="longitude" name="longitude" class="form-control" readonly required>
-    </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-           </div>
-       </form>
-    <div id="map"> </div>
-    <script>console.log("Initializing maps...");
+</section>
+
+<div id="map"></div>
+<script>
+    console.log("Initializing maps...");
     var map1 = L.map('map').setView([33.8869, 9.5375], 7);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map1);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map2);
+
     var marker1 = null;
     map1.on('click', function(e) {
         var lat = e.latlng.lat, lng = e.latlng.lng;
@@ -110,9 +109,7 @@
         document.getElementById('latitude').value = lat;
         document.getElementById('longitude').value = lng;
     });
+</script>
 
-    </script>
-  </body>
-
-
+</body>
 </html>
