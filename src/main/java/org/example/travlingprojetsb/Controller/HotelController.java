@@ -65,7 +65,7 @@ public class HotelController {
             List<Hotel> hotels = hotelService.findAllHotels();
             model.addAttribute("hotels", hotels);
             model.addAttribute("currentUser", user);
-            return "new_hotel";
+            return "list_hotel";
         } catch (IllegalArgumentException | IllegalStateException e) {
             model.addAttribute("error", e.getMessage());
             return "error_page"; // Replace with your actual error page template name

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Management</title>
+    <title>Add Hotel</title>
     <link rel="stylesheet" href="/css/styleGeneral.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,21 +13,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        #map, #map2 {
+        #map {
             height: 400px;
             width: 100%;
             margin-bottom: 20px;
-        }
-        .container {
-            padding-top: 20px;
         }
     </style>
 </head>
 <body>
 
 <div th:replace="fragments/header.html :: mainHeader"></div>
-
-<div style="margin: 50px; padding: 50px"></div>
 
 <section class="book" id="book">
     <h1 class="heading">
@@ -42,168 +37,53 @@
         <span>E</span>
         <span>L</span>
     </h1>
-    <div class="form-group label-floating">
-        <label>Username</label>
-        <input type="text" name="email"
-               th:value="${currentUser.email}"/>
-    </div>
 
-    <div class="row">
-        <div class="image">
-            <img style="width: 100vh;" src="/images/hotel.jpg" alt="Add Hotel">
+    <form th:action="@{/hotel/saveHotel}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="image">Hotel Image:</label>
+            <input type="file" id="image" name="image" class="form-control" required>
         </div>
-
-        <!-- Formulaire d'ajout d'hôtel -->
-        <form th:action="@{/hotel/saveHotel}" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="image">Hotel Image:</label>
-                <input type="file" id="image" name="image" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="nomHotel">Hotel Name:</label>
-                <input type="text" id="nomHotel" name="nomHotel" class="form-control" placeholder="Hotel Name" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" class="form-control" placeholder="Description" rows="3" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="nombreEtoiles">Number of Stars:</label>
-                <input type="number" id="nombreEtoiles" name="nombreEtoiles" class="form-control" min="1" max="5" required>
-            </div>
-            <div class="form-group">
-                <label for="latitude">Latitude:</label>
-                <input type="text" id="latitude" name="latitude" class="form-control" readonly required>
-            </div>
-            <div class="form-group">
-                <label for="longitude">Longitude:</label>
-                <input type="text" id="longitude" name="longitude" class="form-control" readonly required>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+        <div class="form-group">
+            <label for="nomHotel">Hotel Name:</label>
+            <input type="text" id="nomHotel" name="nomHotel" class="form-control" placeholder="Hotel Name" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" class="form-control" placeholder="Description" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="nombreEtoiles">Number of Stars:</label>
+            <input type="number" id="nombreEtoiles" name="nombreEtoiles" class="form-control" min="1" max="5" required>
+        </div>
+        <div class="form-group">
+            <label for="latitude">Latitude:</label>
+            <input type="text" id="latitude" name="latitude" class="form-control" readonly required>
+        </div>
+        <div class="form-group">
+            <label for="longitude">Longitude:</label>
+            <input type="text" id="longitude" name="longitude" class="form-control" readonly required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </section>
 
 <div style="margin: 10px;" id="map"></div>
 
-<section class="displayHotel">
-    <h1 class="heading">
-        <span>D</span>
-        <span>I</span>
-        <span>S</span>
-        <span>P</span>
-        <span>L</span>
-        <span>A</span>
-        <span>Y</span>
-        &nbsp;
-        <span>H</span>
-        <span>O</span>
-        <span>T</span>
-        <span>E</span>
-        <span>L</span>
-    </h1>
-
-    <div class="container">
-        <h1>List of Hotels</h1>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Image</th>
-                <th>Hotel Name</th>
-                <th>Description</th>
-                <th>Number of Stars</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Actions</th>
-                <th>show Location</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="hotel : ${hotels}">
-                <td><img th:src="'data:image/jpeg;base64,' + ${hotel.image}" alt="Hotel Image" width="100"></td>
-                <td th:text="${hotel.nomHotel}"></td>
-                <td th:text="${hotel.description}"></td>
-                <td th:text="${hotel.nombreEtoiles}"></td>
-                <td th:text="${hotel.latitude}"></td>
-                <td th:text="${hotel.longitude}"></td>
-                <td>
-                    <a th:href="@{/hotel/deleteHotel/{id}(id=${hotel.id})}" class="btn btn-danger"
-                       onclick="return confirm('Are you sure you want to delete this hotel?');">Delete</a>
-
-                    <a th:href="@{/hotel/updateHotel/{id}(id=${hotel.id})}" class="btn btn-primary" onclick="return confirm('Are you sure you want to update this hotel?');">
-                        Update</a>
-                </td>
-
-                <td><button
-                        class="btn btn-primary btn-sm mb-1"
-                        th:attr="data-lat=${hotel.latitude}, data-lng=${hotel.longitude}"
-                        onclick="showOnMap(this)">
-                Location </button></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</section>
-<div style="margin: 10px;" id="map2"></div>
-<section class="footer">
-    <div class="box-container">
-        <div class="box">
-            <h3>About us</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis temporibus quas quasi facere id, aspernatur rem obcaecati maiores inventore expedita.</p>
-        </div>
-        <div class="box">
-            <h3>Branch</h3>
-            <a href="#">Egypt</a>
-            <a href="#">London</a>
-            <a href="#">Korea</a>
-            <a href="#">Japan</a>
-        </div>
-        <div class="box">
-            <h3>Quick links</h3>
-            <a href="#">Home</a>
-            <a href="#">Book</a>
-            <a href="#">Packages</a>
-            <a href="#">Services</a>
-            <a href="#">Gallery</a>
-            <a href="#">Review</a>
-            <a href="#">Contact</a>
-        </div>
-        <div class="box">
-            <h3>Follow us</h3>
-            <a href="#">Facebook</a>
-            <a href="#">Instagram</a>
-            <a href="#">Twitter</a>
-            <a href="#">LinkedIn</a>
-        </div>
-    </div>
-    <h1 class="created">Created by <span>MAZEN</span> All rights reserved</h1>
-</section>
-
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-    console.log("Initializing maps...");
-    var map1 = L.map('map').setView([33.8869, 9.5375], 7);
-    var map2 = L.map('map2').setView([33.8869, 9.5375], 7);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map1);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map2);
-    var marker1 = null;
-    map1.on('click', function(e) {
+    var map = L.map('map').setView([33.8869, 9.5375], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+    var marker = null;
+    map.on('click', function(e) {
         var lat = e.latlng.lat, lng = e.latlng.lng;
-        if (marker1) {
-            map1.removeLayer(marker1);
+        if (marker) {
+            map.removeLayer(marker);
         }
-        marker1 = L.marker([lat, lng]).addTo(map1);
+        marker = L.marker([lat, lng]).addTo(map);
         document.getElementById('latitude').value = lat;
         document.getElementById('longitude').value = lng;
     });
-    function showOnMap(button) {
-        var lat = button.getAttribute('data-lat');
-        var lng = button.getAttribute('data-lng');
-        if (lat && lng) {
-            L.marker([lat, lng]).addTo(map2).bindPopup('Location').openPopup();
-            map2.setView([lat, lng], 15);
-        }
-    }
 </script>
+
 </body>
 </html>
