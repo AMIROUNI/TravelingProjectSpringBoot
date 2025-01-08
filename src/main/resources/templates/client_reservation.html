@@ -1,0 +1,214 @@
+
+
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>Reservation ID</th>-->
+<!--        <th>Package Name</th>-->
+<!--        <th>Reservation Date</th>-->
+<!--        <th>Status</th>-->
+<!--        <th>Action</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="reservation : ${reservation}">-->
+<!--        <td th:text="${reservation.id}"></td>-->
+<!--        <td th:text="${reservation.packe.nomPacke}"></td>-->
+<!--        <td th:text="${reservation.dateDeResrvation}"></td>-->
+<!--        <td th:text="${reservation.etat}"></td>-->
+<!--        <td>-->
+<!--            &lt;!&ndash; Disable the button if the status is CONFIRMED &ndash;&gt;-->
+<!--            <form th:action="@{/reservations/cancel/{id}(id=${reservation.id})}" method="get">-->
+<!--                <button type="submit"-->
+<!--                        th:disabled="${reservation.etat == 'CONFIRMEE'}"-->
+<!--                        class="btn btn-danger">-->
+<!--                    Cancel-->
+<!--                </button>-->
+<!--            </form>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORLD WIDE</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        /* Ensure body takes full height */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            height: 100%;
+        }
+
+        /* Adjust content to avoid navbar overlap */
+        body {
+            padding-top: 70px; /* Add space for fixed navbar */
+        }
+
+
+
+
+
+        /* Table container */
+        .table-container {
+            margin-top: 30px;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #ddd;
+        }
+
+        /* Button styling */
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Button for cancellation */
+        .btn-danger {
+            background-color: #f44336;
+        }
+
+        .btn-danger:hover {
+            background-color: #e60000;
+        }
+
+        /* Ensure content scrolls properly on smaller screens */
+        @media (max-width: 768px) {
+            .navbar ul li {
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            .table-container {
+                margin-top: 20px;
+            }
+
+            .table th, .table td {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+    <a href="" class="logo"><span>W</span>orld<span>W</span>ide</a>
+    <nav class="navbar">
+        <a th:href="@{/}">home</a>
+        <a href="#book">book</a>
+        <a href="#packages">packages</a>
+        <a href="#services">services</a>
+        <a href="#gallary">gallary</a>
+        <a href="#review">review</a>
+        <a href="#contact">contact</a>
+    </nav>
+    <div class="icon">
+        <i class="fas fa-search" onclick="showbar()" id="search-btn"></i>
+        <i class="fas fa-user" onclick="showform()"></i>
+    </div>
+    <form action="" class="search-form">
+        <input type="search" id="search-bar" placeholder="What you looking for...">
+        <label for="search-bar" class="fas fa-search"></label>
+    </form>
+</header>
+
+<section class="reservations" id="reservations">
+    <h1 class="heading">
+        <span>r</span>
+        <span>e</span>
+        <span>s</span>
+        <span>e</span>
+        <span>r</span>
+        <span>v</span>
+        <span>a</span>
+        <span>t</span>
+        <span>i</span>
+        <span>o</span>
+        <span>n</span>
+        <span>s</span>
+    </h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Reservation ID</th>
+            <th>Package Name</th>
+            <th>Reservation Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reservation : ${reservation}">
+            <td th:text="${reservation.id}"></td>
+            <td th:text="${reservation.packe.nomPacke}"></td>
+            <td th:text="${reservation.dateDeResrvation}"></td>
+            <td th:text="${reservation.etat}"></td>
+            <td>
+                <!-- Disable the button if the status is CONFIRMED -->
+                <form th:action="@{/reservations/cancel/{id}(id=${reservation.id})}" method="get">
+                    <button type="submit"
+                            th:disabled="${reservation.etat == 'CONFIRMEE'}"
+                            class="btn btn-danger">
+                        Cancel
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+</body>
+</html>

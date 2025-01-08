@@ -1,0 +1,28 @@
+<form th:action="@{/updateClientReservation}" th:object="${reservation}" method="post">
+  <input type="hidden" th:field="*{id}" />
+
+  <label for="dateDeResrvation">Reservation Date:</label>
+  <input type="date" id="dateDeResrvation" th:field="*{dateDeResrvation}" />
+
+  <label for="etat">Status:</label>
+  <select id="etat" th:field="*{etat}">
+    <option value="EN_ATTENTE" th:selected="${reservation.etat == 'EN_ATTENTE'}">Pending</option>
+    <option value="CONFIRMEE" th:selected="${reservation.etat == 'CONFIRMEE'}">Confirmed</option>
+    <option value="ANNULEE" th:selected="${reservation.etat == 'ANNULEE'}">Canceled</option>
+  </select>
+
+  <h3>Passengers</h3>
+  <div th:each="passager, iterStat : ${passagers}">
+    <input type="hidden" th:field="*{passagers[__${iterStat.index}__].id}" />
+    <label for="passagerName">Passenger Name:</label>
+    <input type="text" id="passagerName" th:field="*{passagers[__${iterStat.index}__].nom}" />
+
+    <label for="passagerPhone">Phone:</label>
+    <input type="text" id="passagerPhone" th:field="*{passagers[__${iterStat.index}__].phone}" />
+
+    <label for="passagerCIN">CIN:</label>
+    <input type="text" id="passagerCIN" th:field="*{passagers[__${iterStat.index}__].CIN}" />
+  </div>
+
+  <button type="submit" class="btn btn-primary">Update Reservation</button>
+</form>

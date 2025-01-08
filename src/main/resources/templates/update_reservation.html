@@ -42,7 +42,7 @@
             <label for="clientId">Client Name:</label>
             <select name="clientId" id="clientId" class="form-control" required>
                 <option value="" disabled>Select a client</option>
-                <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.prename}"></option>
+                <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
             </select>
         </div>
 

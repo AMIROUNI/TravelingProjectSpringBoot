@@ -83,6 +83,7 @@
 		<a th:href="@{/vols/allVol}">vols</a>
 		<a th:href="@{/reservations/all}">reservation</a>
 		<a th:href="@{/packe/list}">packages</a>
+		<a href="@{/reservations/userReservation}">my reservations</a>
 		<a href="itemPage.php">Items</a>
 		<a href="logout.php">logout</a>
 	</nav>
@@ -114,7 +115,7 @@
 			<h3>Nom du client</h3>
 			<select name="clientId" required>
 				<option value="" disabled selected>-- Sélectionner un client --</option>
-				<option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.prename}"></option>
+				<option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
 			</select>
 		</div>
 
@@ -180,7 +181,7 @@
 			</thead>
 			<tbody>
 			<tr th:each="reservation : ${reservations}">
-				<td th:text="${reservation.client.prename}"></td>
+				<td th:text="${reservation.user.name}"></td>
 				<td th:text="${reservation.packe.nomPacke}"></td>
 				<td th:text="${reservation.dateDeResrvation}"></td>
 				<td th:text="${reservation.etat}"></td>

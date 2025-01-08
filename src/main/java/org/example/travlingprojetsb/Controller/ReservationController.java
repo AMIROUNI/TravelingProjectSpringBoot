@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -140,8 +141,8 @@ public class ReservationController {
         }
 
         Reservation reservation = new Reservation();
-        model.addAttribute("id_client",user.getId());
-        model.addAttribute("id_packet",idPack);
+        model.addAttribute("id_client", user.getId());
+        model.addAttribute("id_packet", idPack);
         model.addAttribute("Formreservation", reservation);
         return "reservation_client"; // Correspond au template HTML pour les réservations du client
     }
@@ -184,7 +185,114 @@ public class ReservationController {
         return "redirect:/";
     }
 
+////////////// showing the reservation made by the current user
+    @GetMapping("/userReservation")
+    public String userReservation(Model model, @AuthenticationPrincipal UserDetails currentUser) {
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
+        User user = userRepository.findByEmail(currentUser.getUsername());
+        model.addAttribute("id_client", user.getId());
+        List<Reservation> reservation = reservationService.findReservationByUserId(user.getId());
+
+        model.addAttribute("reservation", reservation);
+        for (Reservation r : reservation) {
+            List<Passager> passagers = passagerService.findByIdReservation(r.getId());
+            model.addAttribute("passagers", passagers);
+        }
+
+        return "client_reservation";
+    }
+
+
+    @GetMapping("/cancel/{id}")
+    public String cancelReservation(@PathVariable Long id, @AuthenticationPrincipal UserDetails currentUser) {
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
+
+        // Get the current user
+        User user = userRepository.findByEmail(currentUser.getUsername());
+        if (user == null) {
+            throw new IllegalStateException("Utilisateur non trouvé dans la base de données.");
+        }
+
+        // Find the reservation
+        Reservation reservation = reservationService.findReservationById(id);
+        if (reservation == null || !reservation.getUser().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("La réservation n'existe pas ou n'appartient pas à l'utilisateur.");
+        }
+
+        // Update the status to "CANCELED" if it's "PENDING"
+        if (reservation.getEtat() == EtatDeReservation.EN_ATTENTE) {
+            reservation.setEtat(EtatDeReservation.ANNULEE);
+            reservationService.updateReservation(reservation);
+        }
+
+        return "redirect:/reservations/userReservation";
+    }
 
 
 
+////////////////////////////////////////////
+
+  /*  @GetMapping("/edit/{id}")
+    public String editReservationForm(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails currentUser) {
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
+
+        // Find reservation by ID
+        Reservation reservation = reservationService.findReservationById(id);
+
+        if (reservation == null) {
+            return "redirect:/userReservation"; // Redirect if reservation not found
+        }
+
+        // Check if the current user owns the reservation
+        User user = userRepository.findByEmail(currentUser.getUsername());
+        if (!reservation.getUser().getId().equals(user.getId())) {
+            return "redirect:/userReservation"; // Redirect if the user doesn't own the reservation
+        }
+
+        // Populate the model
+        model.addAttribute("reservation", reservation);
+        model.addAttribute("passagers", passagerService.findByIdReservation(id));
+
+        return "update_user_reservation";
+    }
+
+    @PostMapping("/updateClientReservation")
+    public String updateClientReservation(
+            @ModelAttribute("Formreservation") Reservation updatedReservation,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateDeResrvation,
+            @ModelAttribute("passagers") PassagerWrapper passagerWrapper) {
+
+        // Récupération de la réservation existante
+        Reservation existingReservation = reservationService.findReservationById(updatedReservation.getId());
+        if (existingReservation == null) {
+            throw new IllegalArgumentException("La réservation avec l'ID " + updatedReservation.getId() + " n'existe pas.");
+        }
+
+        // Mise à jour des informations de la réservation (sans modification de Packe)
+        existingReservation.setDateDeResrvation(dateDeResrvation);
+        existingReservation.setEtat(updatedReservation.getEtat());
+
+        // Mise à jour de la réservation
+        reservationService.updateReservation(existingReservation);
+
+        // Mise à jour des passagers
+        passagerService.deleteByReservationId(existingReservation.getId()); // Supprimer les passagers existants
+        for (Passager p : passagerWrapper.getPassagers()) {
+            p.setReservation(existingReservation); // Réassocier les passagers
+            passagerService.addPassager(p); // Ajouter les nouveaux passagers
+        }
+
+        return "redirect:/userReservation";
+    }*/
 }
+
+
+
+
+

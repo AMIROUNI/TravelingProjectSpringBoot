@@ -47,4 +47,8 @@ public List<Passager> findByIdReservation(Long id_reservation){
             throw new RuntimeException("Cannot update Passager with ID: " + passager.getId() + ", it does not exist.");
         }
     }
+
+    public void deleteByReservationId(Long id) {
+        passagerRepository.deleteByReservationId(id);
+    }
 }

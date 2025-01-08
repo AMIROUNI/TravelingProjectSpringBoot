@@ -46,6 +46,10 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    public List<Reservation> findReservationByUserId(Long userId) {
+        return reservationRepository.findReservationsByUserId(userId);
+    }
+
     public void updateReservation(Reservation reservation) {
         reservationRepository.saveAndFlush(reservation);
     }

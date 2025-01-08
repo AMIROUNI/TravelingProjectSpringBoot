@@ -11,4 +11,6 @@ public interface PassagerRepository extends JpaRepository<Passager,Long> {
 
     @Query("SELECT p FROM Passager p WHERE p.reservation.id = :id_reservation")
     List<Passager> findByIdReservation(@Param("id_reservation") Long id_reservation);
+
+    void deleteByReservationId(@Param("id_reservation") Long id_reservation);
 }
