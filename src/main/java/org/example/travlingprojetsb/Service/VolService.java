@@ -51,4 +51,8 @@ public class VolService {
     public List<Vol> findVolsByIds(List<Long> volIds) {
         return volRepository.findAllById(volIds);
     }
+    public List<Vol> findByPacksId(Long packsId){
+        return volRepository.findByPacksId(packsId);
+    }
+
 }

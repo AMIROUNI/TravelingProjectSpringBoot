@@ -1,6 +1,8 @@
 package org.example.travlingprojetsb.Controller;
 
+import org.example.travlingprojetsb.Entity.Hotel;
 import org.example.travlingprojetsb.Entity.Packe;
+import org.example.travlingprojetsb.Entity.Vol;
 import org.example.travlingprojetsb.Service.HotelService;
 import org.example.travlingprojetsb.Service.PackeService;
 import org.example.travlingprojetsb.Service.VolService;
@@ -95,5 +97,17 @@ public class PackeController {
                               @RequestParam("hotels") List<Long> hotelsIds) {
         packeService.updatePacke(id, file, nomPacke, description, prix, volsIds, hotelsIds);
         return "redirect:/packe/list";
+    }
+
+
+    @GetMapping("/detail/{id}")
+    public String showDetailForm(@PathVariable("id") Long id, Model model) {
+        Packe packe = packeService.findPackeById(id);
+        List<Vol> vols=volService.findByPacksId(id);
+        List<Hotel> hotels=hotelService.findByPacksId(id);
+        model.addAttribute("vols", vols);
+        model.addAttribute("formPacke", packe);
+        model.addAttribute("hotels", hotels);
+        return "detail_packe";
     }
 }

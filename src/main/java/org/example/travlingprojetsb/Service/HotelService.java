@@ -76,4 +76,11 @@ public class HotelService {
         return  hotelRepository.saveAndFlush(hotel);
      }
 
+     public List<Hotel> findByPacksId(Long packsId){
+        return hotelRepository.findByPacksId(packsId);
+     }
+
+
+
+
 }

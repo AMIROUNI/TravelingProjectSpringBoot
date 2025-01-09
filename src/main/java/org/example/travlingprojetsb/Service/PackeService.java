@@ -86,4 +86,10 @@ public class PackeService {
 
         packeRepository.save(packe);
     }
+
+
+   public List<Vol> findVolsById(Long packeId) {
+        return packeRepository.findVolsById(packeId);
+   }
+   public List<Hotel> findHotlsById(Long packeId){return packeRepository.findHotelsById(packeId);}
 }

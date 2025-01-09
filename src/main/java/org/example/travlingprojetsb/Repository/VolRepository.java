@@ -16,4 +16,7 @@ public interface VolRepository extends JpaRepository<Vol, Long> {
     @Query("SELECT v FROM Vol v WHERE v.id IN :volIds")
     List<Vol> findVolsByIds(@Param("volIds") List<Long> volIds);
 
+    List<Vol> findByPacksId(Long packsId);
+
+
 }
