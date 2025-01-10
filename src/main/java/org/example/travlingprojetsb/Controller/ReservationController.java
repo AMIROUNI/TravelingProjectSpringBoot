@@ -8,6 +8,7 @@ import org.example.travlingprojetsb.Service.PassagerService;
 import org.example.travlingprojetsb.Service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -131,6 +132,9 @@ public class ReservationController {
         }
 
         User user = userRepository.findByEmail(currentUser.getUsername());
+        List<Role> roles = user.getRoles();
+        for (Role role : roles) {System.out.println("//////////////"+role.toString());}
+
         if (user == null) {
             throw new IllegalStateException("Utilisateur non trouvé dans la base de données.");
         }

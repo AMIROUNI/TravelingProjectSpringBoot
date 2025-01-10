@@ -41,7 +41,7 @@ public class AeroportController {
     public String addAeroport(Model model) {
         Aeroport aeroport = new Aeroport();
         model.addAttribute("formAeroport", aeroport);
-
+        model.addAttribute("aeroports", aeroportService.findAllAeroports());
         // Get all villes from the VilleService
         List<Ville> villes = villeService.findAllVilles();
         model.addAttribute("villes", villes);

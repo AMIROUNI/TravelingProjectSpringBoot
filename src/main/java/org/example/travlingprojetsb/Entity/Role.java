@@ -24,4 +24,11 @@ public class    Role {
 
     @ManyToMany(mappedBy = "roles") //mapped by is a keyword to let know compiler that there is a bidirectional mapping between user and role entities.
     private List<User> user =new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

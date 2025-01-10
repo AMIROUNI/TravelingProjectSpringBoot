@@ -1,6 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+
+        /* Style for the logged-in username */
+        .user-name {
+            color: white; /* White text for the username */
+            font-size: 16px; /* Adjust the font size */
+            padding-right: 15px; /* Add some spacing between the username and logout button */
+            font-weight: bold; /* Make the username bold */
+        }
+
+        /* Style for the logout button */
+        .logout-btn {
+            background-color: #ff4d4d; /* Red background */
+            color: white; /* White text color */
+            border: none; /* Remove default button border */
+            padding: 10px 20px; /* Add padding for the button */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            font-size: 16px; /* Set font size */
+            border-radius: 5px; /* Round the corners of the button */
+            transition: background-color 0.3s ease; /* Smooth transition for background color */
+        }
+
+        /* Hover effect for the logout button */
+        .logout-btn:hover {
+            background-color: #e60000; /* Darker red when hovering */
+        }
+
+        /* Add some space around the logout button */
+        .icon {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
+
+
+
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,41 +49,100 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
-        <a href="" class="logo"><span>W</span>orld<span>W</span>wide</a>
-        <nav class="navbar">
-            <a href="#home">home</a>
-            <a href="#book">book</a>
-            <a href="#packages">packages</a>
-            <a href="#services">services</a>
-            <a href="#gallary">gallary</a>
-            <a href="#review">review</a>
-            <a href="#contact">contact</a>
-            <a th:href="@{/reservations/userReservation}">my reservations</a>
-        </nav>
-        <div class="icon">
-            <i class="fas fa-search" onclick="showbar()" id="search-btn"></i>
-            <i class="fas fa-user" onclick="showform()"></i>
-        </div>
-        <form action="" class="search-form">
-            <input type="search" id="search-bar" placeholder="What you looking for...">
-            <label for="search-bar" class="fas fa-search"></label>
-        </form>
-    </header>
+<header>
+    <div id="menu-bar" class="fas fa-bars" onclick="showmenu()"></div>
+    <a href="" class="logo"><span>W</span>orld<span>W</span>wide</a>
+    <nav class="navbar">
+        <a href="#home">home</a>
+        <a href="#book">book</a>
+        <a href="#packages">packages</a>
+        <a href="#services">services</a>
+        <a href="#gallary">gallary</a>
+        <a href="#review">review</a>
+        <a href="#contact">contact</a>
+        <a th:href="@{/reservations/userReservation}">my reservations</a>
+    </nav>
+    <div class="icon">
+        <i class="fas fa-search" onclick="showbar()" id="search-btn"></i>
 
-    <div class="login-form">
+        <!-- Show the user's name if logged in -->
+        <span th:if="${userName != null}" class="user-name">
+            <i class="fas fa-user"></i> <span th:text="${userName}"></span>
+        </span>
+
+        <!-- Show login icon if not logged in -->
+        <i th:unless="${userName != null}" class="fas fa-user" onclick="showform()"></i>
+
+        <!-- Logout button -->
+        <form th:if="${userName != null}" action="#" method="post" th:action="@{/logout}" style="display:inline;">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+    <form action="" class="search-form">
+        <input type="search" id="search-bar" placeholder="What you looking for...">
+        <label for="search-bar" class="fas fa-search"></label>
+    </form>
+</header>
+
+
+
+
+<div class="login-form">
         <i class="fas fa-times" id="form-close" onclick="hideform()"></i>
-        <form action="">
+        <form method="post"
+              role="form"
+              th:action="@{/login}">
             <h3>login</h3>
-            <input type="email" class="box" placeholder="Enter your email">
-            <input type="password" class="box" placeholder="Enter your password">
+            <input type="email" class="box" id="username"
+                   name="username" placeholder="Enter your email">
+            <input type="password"  id="password"
+                   name="password" class="box" placeholder="Enter your password">
             <input type="submit" value="login now" class="btn">
             <input type="checkbox" id="remember">
             <label for="remmember"> remember me</label>
             <p>forget password? <a href="">click here</a></p>
             <p>don't have acount? <a href="">sign up</a></p>
         </form>
+       <!-- <form
+                method="post"
+                role="form"
+                th:action="@{/login}"
+                class="form-horizontal"
+        >
+            <div class="form-group mb-3">
+                <label class="control-label">Email</label>
+                <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        class="form-control"
+                        placeholder="Enter Email address"
+                />
+
+
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="control-label">Password</label>
+                <input
+                        type="text"
+                        id="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Enter password"
+                />
+
+
+            </div>
+
+            <div class="form-group mb-3">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <span>Not registered?
+                      <a th:href="@{/register}">Register/Signup here</a>
+                  </span>
+            </div>
+
+        </form> -->
     </div>
     <!-------------------------------------------------------------------------------->
     <!-------------------------------------------------------------------------------->
